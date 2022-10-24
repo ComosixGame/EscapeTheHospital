@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
     private void SetDirMove(InputAction.CallbackContext ctx)
     {
         _inputMove = ctx.ReadValue<Vector2>();
-        Debug.Log(ctx);
     }
 
     private void OnDisable() 

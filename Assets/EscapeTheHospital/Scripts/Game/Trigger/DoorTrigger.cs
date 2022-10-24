@@ -7,7 +7,7 @@ public class DoorTrigger : MonoBehaviour
     public int triggerID;
     private void OnTriggerEnter(Collider other) 
     {
-        if (other.CompareTag("Player") && Key.isHasKey)
-            GameManager.StartDoorEvent(triggerID);
+        if (other.CompareTag("Player"))
+            GameManager.Instance.StartDoorEvent(triggerID);
     }
 }
