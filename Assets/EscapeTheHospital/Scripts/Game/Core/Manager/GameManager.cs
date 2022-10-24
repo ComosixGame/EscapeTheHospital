@@ -18,6 +18,15 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent<int> onBuyItem = new UnityEvent<int>();
     public UnityEvent<bool> onEndGame = new UnityEvent<bool>();
 
+    //EventManager
+    public static UnityEvent<int> onOpenDoorEvent = new UnityEvent<int>();
+    public static UnityEvent onPickUpKeyEvent = new UnityEvent();  
+    public static UnityEvent<int> onEndEvent = new UnityEvent<int>();
+    public static UnityEvent<int> onTeleportEvent = new UnityEvent<int>();
+    public static UnityEvent<int> onLaserEvent = new UnityEvent<int>();
+
+    public static UnityEvent<int> onPickPoisonEvent =  new UnityEvent<int>();
+
     protected virtual void Awake ()
     {
         base.Awake();
@@ -125,6 +134,36 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    //EventManager
+    public static void TeleportPlayer(int id)
+    {
+        onTeleportEvent?.Invoke(id);
+    }
+
+    public static void LaserOff(int id)
+    {
+        onLaserEvent?.Invoke(id);
+    }
+
+    public static void PickedUpKey()
+    {
+        onPickUpKeyEvent?.Invoke();
+    }
+
+    public static void StartDoorEvent(int id)
+    {
+        onOpenDoorEvent?.Invoke(id);
+    }
+
+    public static void EndGame(int id)
+    {
+        onEndEvent?.Invoke(id);
+    }
+
+    public static void InvisiblePoison(int id)
+    {
+        onPickPoisonEvent?.Invoke(id);
+    }
 
 
 }

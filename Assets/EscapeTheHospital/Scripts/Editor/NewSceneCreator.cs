@@ -10,7 +10,7 @@ public class NewSceneCreator : EditorWindow
     protected string m_NewSceneName;
     protected readonly GUIContent m_NameContent = new GUIContent ("New Scene Name");
 
-    [MenuItem("Comosix Kit Tools/Create New Scene", priority = 100)]
+    [MenuItem("Comosix Kit Tools/Create New Scene", priority = 1)]
     static void Init ()
     {
         NewSceneCreator window = GetWindow<NewSceneCreator>();
