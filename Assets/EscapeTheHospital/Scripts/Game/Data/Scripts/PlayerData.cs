@@ -5,23 +5,29 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public int level;
-    public int coin;
-    public int skin;
-    public int hat;
-    public int shirt;
-    public int pants;
-    public int shoes;
+    public int       currentCoins;
+    public List<int> totalLevels;
+    public List<int> totalSkins;
+    public List<int> totalHats;
+    public List<int> totalShirts;
+    public List<int> totalPants;
+    public List<int> totalShoes;
 
     public PlayerData ()
     {
-        level = 6;
-        coin  = 0;
-        skin  = 0;
-        hat   = 0;
-        shirt = 0;
-        pants = 0;
-        shoes = 0;
+        currentCoins  = 0;
+        totalLevels = new List<int>();
+        totalSkins  = new List<int>();
+        totalHats   = new List<int>();
+        totalShirts = new List<int>();
+        totalPants  = new List<int>();
+        totalShoes  = new List<int>();
+
+        totalSkins.Add(0);
+        totalHats.Add(0);
+        totalShirts.Add(0);
+        totalPants.Add(0);
+        totalShoes.Add(0);
     }
 
     public void SaveData ()
