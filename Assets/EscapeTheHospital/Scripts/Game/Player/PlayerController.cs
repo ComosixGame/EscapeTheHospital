@@ -33,12 +33,6 @@ public class PlayerController : MonoBehaviour
         _pInput.Enable();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void FixedUpdate() 
     {
         if (new Vector3(_inputMove.x,0,_inputMove.y) != Vector3.zero)
@@ -55,8 +49,9 @@ public class PlayerController : MonoBehaviour
         _velocity = Vector3.Distance(Vector3.zero, new Vector3(_inputMove.x,0,_inputMove.y));
     }
 
-    private void OnDisable() 
+    private void OnDestroy() 
     {
-        _pInput.Disable();
+        _pInput.Player.Move.performed -= SetDirMove;
+        _pInput.Player.Move.canceled -= SetDirMove;
     }
 }

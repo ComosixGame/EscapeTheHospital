@@ -33,10 +33,13 @@ public class GameManager : Singleton<GameManager>
         _playerData = PlayerData.LoadData();
     }
 
-    // void Start ()
-    // {
-    //     InitGame();
-    // }
+    void Start ()
+    {
+        // InitGame();
+        // FieldOfView.CatchedPlayer.Add
+        FieldOfView.onCatchedPlayer += EndGame;
+    }
+
 
     // public void InitGame ()
     // {
@@ -62,13 +65,15 @@ public class GameManager : Singleton<GameManager>
     //     Time.timeScale = 1;
     // }
 
-    // public void EndGame(bool win)
-    // {
-    //     _isWin = win;
-    //     onEndGame?.Invoke(_isWin);
-    //     onUpdateCoins?.Invoke(_playerData.currentCoins);
-    //     _playerData.SaveData();
-    // }
+    public void EndGame()
+    {
+        Debug.Log("ABC");
+        FieldOfView.onCatchedPlayer -= EndGame;
+        // _isWin = win;
+        // onEndGame?.Invoke(_isWin);
+        // onUpdateCoins?.Invoke(_playerData.currentCoins);
+        // _playerData.SaveData();
+    }
 
     // public bool BuyItem(int id, int price, TypeItem typeItem)
     // {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FieldOfView : MonoBehaviour
 {
     public float viewRadius;
@@ -14,8 +15,16 @@ public class FieldOfView : MonoBehaviour
     public MeshFilter viewMeshFilter;
     public int edgeResolveIterations;
     public float edgeDstThreshold;
+
+    public delegate void CatchedPlayer();
+    public static event CatchedPlayer onCatchedPlayer;
+
     Mesh viewMesh;
 
+    private void Awake() 
+    {
+        
+    }
     private void Start() 
     {
         viewMesh = new Mesh();
@@ -50,9 +59,9 @@ public class FieldOfView : MonoBehaviour
             if (Vector3.Angle (transform.forward, dirToPlayer) < viewAngle/2)
             {
                 float dstToPlayer = Vector3.Distance (transform.position, player.position);
-
                 if (!Physics.Raycast (transform.position, dirToPlayer, dstToPlayer, obstacleMask))
                 {
+                    onCatchedPlayer?.Invoke();
                     visiblePlayer.Add (player);
                 }
             }
