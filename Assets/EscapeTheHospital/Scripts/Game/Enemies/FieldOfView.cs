@@ -10,7 +10,7 @@ public class FieldOfView : MonoBehaviour
     public float viewAngle;
     public LayerMask playerMask;
     public LayerMask obstacleMask;
-    public List<Transform> visiblePlayer = new List<Transform>();
+    // public List<Transform> visiblePlayer = new List<Transform>();
     public float meshResolution;
     public MeshFilter viewMeshFilter;
     public int edgeResolveIterations;
@@ -49,7 +49,7 @@ public class FieldOfView : MonoBehaviour
     }
     void FindVisiblePlayer()
     {
-        visiblePlayer.Clear();
+        // visiblePlayer.Clear();
         Collider[] playerInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, playerMask);
 
         for (int i =0; i < playerInViewRadius.Length; i++)
@@ -62,7 +62,7 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast (transform.position, dirToPlayer, dstToPlayer, obstacleMask))
                 {
                     onCatchedPlayer?.Invoke();
-                    visiblePlayer.Add (player);
+                    // visiblePlayer.Add (player);
                 }
             }
         }

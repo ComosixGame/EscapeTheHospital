@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class PatrolCamera : MonoBehaviour
 {
     public float speed = 5;
 	public float waitTime = .3f;
 	public float turnSpeed = 90;
-
 	public Transform pathHolder;
 
-	void Start() {
-
+	void Start() 
+	{
 		Vector3[] waypoints = new Vector3[pathHolder.childCount];
 		for (int i = 0; i < waypoints.Length; i++) {
 			waypoints [i] = pathHolder.GetChild (i).position;
@@ -22,7 +21,8 @@ public class Enemy : MonoBehaviour
 
 	}
 
-	IEnumerator FollowPath(Vector3[] waypoints) {
+	IEnumerator FollowPath(Vector3[] waypoints) 
+	{
 		transform.position = waypoints [0];
 
 		int targetWaypointIndex = 1;
@@ -41,7 +41,8 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	IEnumerator TurnToFace(Vector3 lookTarget) {
+	IEnumerator TurnToFace(Vector3 lookTarget) 
+	{
 		Vector3 dirToLookTarget = (lookTarget - transform.position).normalized;
 		float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
 
@@ -52,7 +53,8 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	void OnDrawGizmos() {
+	void OnDrawGizmos() 
+	{
 		Vector3 startPosition = pathHolder.GetChild (0).position;
 		Vector3 previousPosition = startPosition;
 

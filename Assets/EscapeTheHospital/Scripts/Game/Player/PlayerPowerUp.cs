@@ -33,7 +33,7 @@ public class PlayerPowerUp : MonoBehaviour
         if (Time.time >= timeFootStep)
         {
             GameObject print = Instantiate(footPrint, transform.position, transform.rotation);
-            Destroy(print, 3f);
+            Destroy(print, 2f);
             timeFootStep = Time.time + 0.2f;
         }
     }

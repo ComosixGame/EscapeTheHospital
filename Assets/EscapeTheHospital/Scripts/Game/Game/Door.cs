@@ -1,40 +1,44 @@
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-// using UnityEngine.Events;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 
-// public class Door : MonoBehaviour
-// {
-//     private bool _isOpen = false;
-//     public static bool isWin = false;
-//     public int doorID;
+public class Door : MonoBehaviour
+{
+    public int doorID;
+    public Transform doorOpenPos;
+    // public Transform doorClosePos;
 
-//     // Start is called before the first frame update
-//     void Start()
-//     {
-//         GameManager.onOpenDoorEvent.AddListener(OpenDoor);
-//     }
+    private void Start() 
+    {
+        GameEventManager.Instance.onDoorwayTriggerEnter += OnDoorwayOpen;
+        // GameEventManager.Instance.onDoorwayTriggerExit += OnDoorwayClose; 
+    }
 
-//     // Update is called once per frame
-//     void Update()
-//     {
-//         if (_isOpen)
-//         {
-//             //Do Something
-//         }
-//     }
+    private void OnDoorwayOpen(int doorID)
+    {
+        if (doorID == this.doorID)
+        {
+            transform.position = doorOpenPos.position;
+        }
+    }
 
-//     private void OpenDoor(int triggerID)
-//     {
-//         if (triggerID == doorID)
-//         {
-//             _isOpen = true;
-//             isWin = true;
-//         }
-//     }
+    // private void OnDoorwayClose(int doorID)
+    // {
+    //     if (doorID == this.doorID)
+    //     {
+    //         transform.position = new Vector3(-12.92f, 0, 12.08f);
+    //     }
+    // }
 
-//     private void OnDisable() 
-//     {
-//         GameManager.onOpenDoorEvent.RemoveListener(OpenDoor); 
-//     }
-// }
+    // private void OnDestroy() 
+    // {
+    //     GameEventManager.Instance.onDoorwayTriggerEnter -= OnDoorwayOpen;
+    //     // GameEventManager.Instance.onDoorwayTriggerExit -= OnDoorwayClose; 
+    // }
+
+    // private void OnDisable() 
+    // {
+    //     GameEventManager.Instance.onDoorwayTriggerEnter -= OnDoorwayOpen;
+    // }
+}

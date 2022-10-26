@@ -8,6 +8,19 @@ public class DoorTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other) 
     {
         if (other.CompareTag("Player"))
-            GameManager.Instance.StartDoorEvent(triggerID);
+        {
+            GameEventManager.Instance.DoorwayTriggerEnter(triggerID);
+            FindObjectOfType<AudioManager>().Play("OpenDoor");
+
+            Destroy(this);
+        }     
     }
+
+    // private void OnTriggerExit(Collider other) 
+    // {
+    //     if (other.CompareTag("Player"))
+    //     {
+    //         GameEventManager.Instance.DoorwayTriggerExit(triggerID);
+    //     }
+    // }
 }

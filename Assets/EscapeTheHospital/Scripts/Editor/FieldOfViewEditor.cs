@@ -18,9 +18,9 @@ public class FieldOfViewEditor : Editor
         Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB*fow.viewRadius);
 
         Handles.color = Color.red;
-        foreach (Transform visiblePlayer in fow.visiblePlayer)
-        {
-            Handles.DrawLine (fow.transform.position, visiblePlayer.position);
-        }
+        // foreach (Transform visiblePlayer in fow.visiblePlayer)
+        // {
+        //     Handles.DrawLine (fow.transform.position, visiblePlayer.position);
+        // }
     }
 }
