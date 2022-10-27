@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
@@ -73,3 +72,4 @@ public class NewSceneCreator : EditorWindow
         EditorBuildSettings.scenes = newBuildScenes;
     }
 }
+#endif

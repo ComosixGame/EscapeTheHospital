@@ -3,30 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+public class EnemyController : MonoBehaviour
+{
+
+private enum State
+{
+    IDLE,
+    PATROL
+}
 public enum TypePatrol 
 {
     STANDINPLACE,
-    RELAX,
     MOVEAROUND,
     ENTER,
     WARNING,
     ALL
 }
-public class EnemyController : MonoBehaviour
-{
     private int _patrolIndex = 0;
     private Vector3 _playerPosition;
     private Transform _player;
     private float _speed;
     private int _velocityHash;
-    public NavMeshAgent agent;
+    private NavMeshAgent _agent;
+    private State _state, _preState;
+    private float _idleTime;
+    public Vector3 standPos;
     public TypePatrol typePatrol;
     public Vector3[] patrolList;
 
 
     private void Awake() 
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         _velocityHash = Animator.StringToHash("Velocity");
     }
 
@@ -43,7 +52,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // PatrolState();
         Patrol();
     }
 
@@ -63,7 +71,45 @@ public class EnemyController : MonoBehaviour
         if (patrolList != null && patrolList.Length > 0)
         {
             Vector3 patrolPoint = patrolList[_patrolIndex];
+            switch (typePatrol)
+            {   
+                case TypePatrol.STANDINPLACE:
+                    _agent.SetDestination(standPos);
+                    if (_agent.remainingDistance <= _agent.stoppingDistance)
+                    {
+                        transform.rotation = LerpRotation(patrolPoint, transform.position, 1f);
+                        _patrolIndex++;
+
+                        if (_patrolIndex >= patrolList.Length)
+                        {
+                            _patrolIndex = 0;
+                        }
+                    }
+                break;
+                case TypePatrol.MOVEAROUND:
+                    if (_agent.remainingDistance <= _agent.stoppingDistance)
+                    {   
+                        // _idleTime += Time.deltaTime;
+                        _patrolIndex++;
+                        if (_patrolIndex >= patrolList.Length)
+                        {
+                            _patrolIndex = 0;
+                        }
+                        _agent.SetDestination(patrolPoint);
+                        _idleTime = 0;
+                    }
+                break;
+            }
         }
+    }
+
+    private Quaternion LerpRotation(Vector3 pos1, Vector3 pos2, float speed)
+    {
+        Vector3 dirLook = pos1 - pos2;
+        Quaternion rotLook = Quaternion.LookRotation(dirLook.normalized);
+        rotLook.x = 0;
+        rotLook.z = 0;
+        return Quaternion.Lerp(transform.rotation, rotLook, speed*Time.deltaTime);
     }
 
     private void OnDisable() 
@@ -72,3 +118,4 @@ public class EnemyController : MonoBehaviour
 
     }
 }
+
