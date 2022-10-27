@@ -11,11 +11,6 @@ public class EventManager : Singleton<EventManager>
     public static UnityEvent<int> onTeleportEvent = new UnityEvent<int>();
     public static UnityEvent<int> onLaserEvent = new UnityEvent<int>();
 
-    private void Awake() 
-    {
-        base.Awake();
-    }
-
     public static void TeleportPlayer(int id)
     {
         onTeleportEvent?.Invoke(id);

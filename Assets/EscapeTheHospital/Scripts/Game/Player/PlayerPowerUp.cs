@@ -6,10 +6,12 @@ public class PlayerPowerUp : MonoBehaviour
 {
     private float timeFootStep;
     public GameObject footPrint;
+    private float _velocity;
     // Start is called before the first frame update
     void Start()
     {
         InvisibleTrigger.onInvisiblePlayer += InivisiblePlayer;
+        // _velocity = GetComponent<PlayerController>().velocity;
     }
 
     // Update is called once per frame
@@ -33,8 +35,8 @@ public class PlayerPowerUp : MonoBehaviour
         if (Time.time >= timeFootStep)
         {
             GameObject print = Instantiate(footPrint, transform.position, transform.rotation);
-            Destroy(print, 2f);
-            timeFootStep = Time.time + 0.2f;
+            Destroy(print, 3f);
+            timeFootStep = Time.time + 0.3f;
         }
     }
 }

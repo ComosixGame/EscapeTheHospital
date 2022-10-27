@@ -33,6 +33,10 @@ public class FieldOfView : MonoBehaviour
 
         StartCoroutine("FindPlayerWithDelay", .2f); 
     }
+    private void Update() 
+    {
+        
+    }
 
     void LateUpdate()
     {

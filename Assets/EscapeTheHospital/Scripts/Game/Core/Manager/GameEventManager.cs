@@ -6,12 +6,9 @@ using System;
 public class GameEventManager : Singleton<GameEventManager>
 {
     public event Action<int> onDoorwayTriggerEnter;
-    // public event Action<int> onDoorwayTriggerExit;
 
-    private void Awake() 
-    {
-        base.Awake();
-    }
+    public event Action onDocumentTriggerEnter;
+    // public event Action<int> onDoorwayTriggerExit;
 
     // Start is called before the first frame update
     void Start() 
@@ -39,4 +36,12 @@ public class GameEventManager : Singleton<GameEventManager>
     //         onDoorwayTriggerExit(id);
     //     }
     // }
+
+    public void TakeDocumentTriggerEnter()
+    {   
+        // if (onDocumentTriggerEnter != null)
+        // {
+            onDocumentTriggerEnter();
+        // }
+    }
 }

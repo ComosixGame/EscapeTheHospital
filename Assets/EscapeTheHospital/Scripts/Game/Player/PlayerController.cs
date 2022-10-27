@@ -5,17 +5,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private CharacterController _cController;
     private PlayerInputActions _pInput;
     private Animator _pAnimator;
     private Vector2 _inputMove;
     private float _velocity;
     private int _velocityHash;
-    [SerializeField] private float _speed = 1f;
+    [SerializeField] private float _speed = 10f;
+    public CharacterController cController;
 
     private void Awake() 
     {
-        _cController = GetComponent<CharacterController>();
+        cController = GetComponent<CharacterController>();
         _pInput = new PlayerInputActions();
 
         _pInput.Player.Move.performed += SetDirMove;
@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
         if (new Vector3(_inputMove.x,0,_inputMove.y) != Vector3.zero)
         {
             transform.rotation = Quaternion.LookRotation(new Vector3(_inputMove.x,0,_inputMove.y)*Time.deltaTime);
-        }
-            _cController.Move(new Vector3(_inputMove.x,0,_inputMove.y)*_speed);
+        }   
+            cController.Move(new Vector3(_inputMove.x,0,_inputMove.y)*_speed*Time.deltaTime);
             _pAnimator.SetFloat(_velocityHash, _velocity);
     }
 

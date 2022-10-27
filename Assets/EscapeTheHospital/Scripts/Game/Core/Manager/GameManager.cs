@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     private bool _isWin, _isLose;
 
     public UnityEvent<int> onUpdateCoins = new UnityEvent<int>();
+    public UnityEvent onPlayerCatched = new UnityEvent();
     // public UnityEvent<Vector3> onEnemyAlert = new UnityEvent<Vector3>();
     // public UnityEvent onEnemyAlertOff = new UnityEvent();
     // public UnityEvent onStart = new UnityEvent();
@@ -27,7 +28,7 @@ public class GameManager : Singleton<GameManager>
     // public static UnityEvent<int> onPickPoisonEvent =  new UnityEvent<int>();
 
 
-    protected virtual void Awake ()
+    protected override void Awake ()
     {
         base.Awake();
         _playerData = PlayerData.LoadData();
@@ -38,6 +39,7 @@ public class GameManager : Singleton<GameManager>
         // InitGame();
         // FieldOfView.CatchedPlayer.Add
         FieldOfView.onCatchedPlayer += EndGame;
+ 
     }
 
 
@@ -67,8 +69,7 @@ public class GameManager : Singleton<GameManager>
 
     public void EndGame()
     {
-        Debug.Log("ABC");
-        FieldOfView.onCatchedPlayer -= EndGame;
+        onPlayerCatched?.Invoke();
         // _isWin = win;
         // onEndGame?.Invoke(_isWin);
         // onUpdateCoins?.Invoke(_playerData.currentCoins);
