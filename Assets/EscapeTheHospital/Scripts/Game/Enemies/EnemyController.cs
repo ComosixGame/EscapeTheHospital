@@ -28,7 +28,7 @@ public enum TypePatrol
     private NavMeshAgent _agent;
     private State _state, _preState;
     private float _idleTime;
-    private GameObject _FieldOfView;
+    private GameObject _fieldOfView;
     [SerializeField]
     private Scanner _playerScanner = new Scanner();
     public Vector3 standPos;
@@ -53,9 +53,9 @@ public enum TypePatrol
     // Start is called before the first frame update
     void Start()
     {
-        _FieldOfView = _playerScanner.CreataFieldOfView(rootScanner, rootScanner.position,detectionAngle,viewDistance);
-        GameEventManager.Instance.onDocumentTriggerEnter += StatePatrolEnter;
-
+        _fieldOfView = _playerScanner.CreataFieldOfView(rootScanner, rootScanner.position,detectionAngle,viewDistance);
+        // GameEventManager.Instance.onDocumentTriggerEnter += StatePatrolEnter;
+        GameManager.Instance.onPlayerDetected.AddListener(StatePatrolEnter);
     }
 
 
@@ -73,9 +73,14 @@ public enum TypePatrol
         {
             case State.IDLE:
                 Patrol();
+                _preState = _state;
+                break;
+            case State.PATROL:
+                _preState = _state;
+                Patrol();
                 break;
             case State.ENTER:
-                PatrolEnter(_playerPosition);
+                PatrolEnter();
                 break;
             case State.WARNING:
                 PatrolWarning();
@@ -135,20 +140,27 @@ public enum TypePatrol
         }
     }
 
-    private void PatrolEnter(Vector3 playPos)
+    private void PatrolEnter()
     {
-        _agent.SetDestination(playPos);
-        // _state = State.PATROL;
+        _agent.SetDestination(_playerPosition);
+        Debug.Log(_agent.transform.position);
+        if (_agent.remainingDistance <= _agent.stoppingDistance)
+        {
+            _state = State.PATROL;
+        }
+
      
     }
+
 
     private void PatrolWarning()
     {
 
     }
 
-    private void StatePatrolEnter()
+    private void StatePatrolEnter(Vector3 pos)
     {
+        _playerPosition = pos;
         _state = State.ENTER;
     }
 
@@ -165,7 +177,6 @@ public enum TypePatrol
         _player = _playerScanner.DetectSingleTarget(hitList);
         _playerPosition = _player.position;
         GameManager.Instance.EndGame();
-        Debug.Log(123);
     }
 
     private void OnDisable() 

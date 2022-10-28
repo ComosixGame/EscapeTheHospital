@@ -4,21 +4,38 @@ using UnityEngine;
 
 public class PatrolCamera : MonoBehaviour
 {
+	[SerializeField]
+	private Scanner _playerScanner = new Scanner();
+	private GameObject _fieldOfView;
+	private Transform _player;
+	private Vector3 _playerPosition;
     public float speed = 5;
 	public float waitTime = .3f;
-	public float turnSpeed = 90;
+
 	public Transform pathHolder;
+	public Transform rootScanner;
+    [Range(0, 360)]
+    public float detectionAngle;
+    public float viewDistance;
 
 	void Start() 
 	{
+		_fieldOfView = _playerScanner.CreataFieldOfView(rootScanner, rootScanner.position, detectionAngle, viewDistance);
+
 		Vector3[] waypoints = new Vector3[pathHolder.childCount];
 		for (int i = 0; i < waypoints.Length; i++) {
 			waypoints [i] = pathHolder.GetChild (i).position;
-			// waypoints [i] = new Vector3 (waypoints [i].x, transform.position.y, waypoints [i].z);
 		}
 
 		StartCoroutine (FollowPath (waypoints));
 
+		_playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
+
+	}
+
+	void Update() 
+	{
+		_playerScanner.Scan();
 	}
 
 	IEnumerator FollowPath(Vector3[] waypoints) 
@@ -35,22 +52,32 @@ public class PatrolCamera : MonoBehaviour
 				targetWaypointIndex = (targetWaypointIndex + 1) % waypoints.Length;
 				targetWaypoint = waypoints [targetWaypointIndex];
 				yield return new WaitForSeconds (waitTime);
-				yield return StartCoroutine (TurnToFace (targetWaypoint));
+				// yield return StartCoroutine (TurnToFace (targetWaypoint));
 			}
 			yield return null;
 		}
 	}
 
-	IEnumerator TurnToFace(Vector3 lookTarget) 
-	{
-		Vector3 dirToLookTarget = (lookTarget - transform.position).normalized;
-		float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
+	// IEnumerator TurnToFace(Vector3 lookTarget) 
+	// {
+	// 	Vector3 dirToLookTarget = (lookTarget - transform.position).normalized;
+	// 	float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
 
-		while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle)) > 0.05f) {
-			float angle = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
-			transform.eulerAngles = Vector3.up * angle;
-			yield return null;
-		}
+	// 	while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle)) > 0.05f) {
+	// 		float angle = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetAngle, Time.deltaTime);
+	// 		transform.eulerAngles = Vector3.up * angle;
+	// 		yield return null;
+	// 	}
+	// }
+
+	public void HandleWhenDetected(List<RaycastHit> hitList) {
+        Transform _player = _playerScanner.DetectSingleTarget(hitList);
+        _playerPosition = _player.position;
+		GameManager.Instance.PlayerDetected(_player.position);
+    }
+	private void OnDisable() 
+	{
+		_playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
 	}
 
 	void OnDrawGizmos() 
@@ -65,4 +92,5 @@ public class PatrolCamera : MonoBehaviour
 		}
 		Gizmos.DrawLine (previousPosition, startPosition);
 	}
+
 }

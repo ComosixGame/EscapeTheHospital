@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager>
 
     public UnityEvent<int> onUpdateCoins = new UnityEvent<int>();
     public UnityEvent onPlayerCatched = new UnityEvent();
+    public UnityEvent<Vector3> onPlayerDetected = new UnityEvent<Vector3>();
     // public UnityEvent<Vector3> onEnemyAlert = new UnityEvent<Vector3>();
     // public UnityEvent onEnemyAlertOff = new UnityEvent();
     // public UnityEvent onStart = new UnityEvent();
@@ -74,6 +75,11 @@ public class GameManager : Singleton<GameManager>
         // onEndGame?.Invoke(_isWin);
         // onUpdateCoins?.Invoke(_playerData.currentCoins);
         // _playerData.SaveData();
+    }
+
+    public void PlayerDetected(Vector3 playerPos)
+    {
+        onPlayerDetected?.Invoke(playerPos);
     }
 
     // public bool BuyItem(int id, int price, TypeItem typeItem)
