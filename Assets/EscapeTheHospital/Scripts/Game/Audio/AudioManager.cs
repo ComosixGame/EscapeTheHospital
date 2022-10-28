@@ -2,11 +2,12 @@ using UnityEngine.Audio;
 using UnityEngine;
 using System;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
     public Sound[] sounds;
-    private void Awake() 
+    protected override void Awake()
     {
+        base.Awake();
         foreach (Sound s in sounds)
         {
            s.source = gameObject.AddComponent<AudioSource>();
@@ -22,4 +23,6 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
     }
+
+
 }

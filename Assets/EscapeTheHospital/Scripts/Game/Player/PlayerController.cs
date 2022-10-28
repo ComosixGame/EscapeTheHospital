@@ -11,11 +11,11 @@ public class PlayerController : MonoBehaviour
     private float _velocity;
     private int _velocityHash;
     [SerializeField] private float _speed = 10f;
-    public CharacterController cController;
+    private CharacterController _cController;
 
     private void Awake() 
     {
-        cController = GetComponent<CharacterController>();
+        _cController = GetComponent<CharacterController>();
         _pInput = new PlayerInputActions();
 
         _pInput.Player.Move.performed += SetDirMove;
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(new Vector3(_inputMove.x,0,_inputMove.y)*Time.deltaTime);
         }   
-            cController.Move(new Vector3(_inputMove.x,0,_inputMove.y)*_speed*Time.deltaTime);
+            _cController.Move(new Vector3(_inputMove.x,0,_inputMove.y)*_speed*Time.deltaTime);
             _pAnimator.SetFloat(_velocityHash, _velocity);
     }
 

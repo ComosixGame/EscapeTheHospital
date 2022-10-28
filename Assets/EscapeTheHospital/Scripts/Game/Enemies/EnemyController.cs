@@ -143,13 +143,10 @@ public enum TypePatrol
     private void PatrolEnter()
     {
         _agent.SetDestination(_playerPosition);
-        Debug.Log(_agent.transform.position);
         if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
             _state = State.PATROL;
         }
-
-     
     }
 
 
