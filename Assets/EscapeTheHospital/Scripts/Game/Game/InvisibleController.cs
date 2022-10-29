@@ -8,24 +8,15 @@ public class InvisibleController : MonoBehaviour
     private bool _flag = false;
     public GameObject position;
     public LayerMask layer;
+    public Material material;
+
     private void OnTriggerEnter(Collider other) 
     {
         if ((layer & (1 << other.gameObject.layer)) != 0)
         {
-            // other.gameObject.GetComponentInChildren
-            StartCoroutine(Visible());
-            if (_flag)
-            {
-                Debug.Log("ABC");
-                other.gameObject.SetActive(true);
-            }
+            other.GetComponentInChildren<Renderer>().material = material;
+            Destroy(this);
         }
     }
 
-    private IEnumerator Visible()
-    {
-        position.SetActive(false);
-        yield return new WaitForSeconds(5);
-        _flag = true;
-    }
 }
