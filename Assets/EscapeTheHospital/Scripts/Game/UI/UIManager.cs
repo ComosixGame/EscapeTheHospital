@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
 {
     private GameManager _gameManager;
     private AudioManager _audioManager;
-    public GameObject pauseMenu, loseMenu, winMenu;
+    public GameObject header,pauseMenu, loseMenu, winMenu;
 
     private void Awake() 
     {
