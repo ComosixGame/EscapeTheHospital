@@ -173,7 +173,7 @@ public enum TypePatrol
     public void HandleWhenDetected(List<RaycastHit> hitList) {
         _player = _playerScanner.DetectSingleTarget(hitList);
         _playerPosition = _player.position;
-        GameManager.Instance.EndGame();
+        GameManager.Instance.EndGame(false);
     }
 
     private void OnDisable() 

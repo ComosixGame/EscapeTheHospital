@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     private PlayerData _playerData;
     private bool _isWin, _isLose;
-
+    private Scanner _scanner;
     public UnityEvent<int> onUpdateCoins = new UnityEvent<int>();
     public UnityEvent onPlayerCatched = new UnityEvent();
     public UnityEvent<Vector3> onPlayerDetected = new UnityEvent<Vector3>();
@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager>
     // public UnityEvent onResume = new UnityEvent();
     // public UnityEvent<int> onSelectItem = new UnityEvent<int>();
     // public UnityEvent<int> onBuyItem = new UnityEvent<int>();
-    // public UnityEvent<bool> onEndGame = new UnityEvent<bool>();
+    public UnityEvent<bool> onEndGame = new UnityEvent<bool>();
 
     // //EventManager
     public UnityEvent<int> onOpenDoor = new UnityEvent<int>();
@@ -38,9 +38,12 @@ public class GameManager : Singleton<GameManager>
     void Start ()
     {
         // InitGame();
-        // FieldOfView.CatchedPlayer.Add
-        FieldOfView.onCatchedPlayer += EndGame;
- 
+        // FieldOfView.CatchedPlayer.Add;
+    }
+
+    private void OnEnable() 
+    {
+        // _scanner.OnDetectedTarget.AddListener(EndGame);
     }
 
 
@@ -68,11 +71,11 @@ public class GameManager : Singleton<GameManager>
     //     Time.timeScale = 1;
     // }
 
-    public void EndGame()
+    public void EndGame(bool win)
     {
-        onPlayerCatched?.Invoke();
-        // _isWin = win;
-        // onEndGame?.Invoke(_isWin);
+        // onPlayerCatched?.Invoke();
+        _isWin = win;
+        onEndGame?.Invoke(_isWin);
         // onUpdateCoins?.Invoke(_playerData.currentCoins);
         // _playerData.SaveData();
     }

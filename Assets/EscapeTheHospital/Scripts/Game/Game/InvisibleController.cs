@@ -5,7 +5,6 @@ using UnityEngine;
 public class InvisibleController : MonoBehaviour
 {
     private GameObject _player;
-    private bool _flag = false;
     public GameObject position;
     public LayerMask layer;
     public Material material;

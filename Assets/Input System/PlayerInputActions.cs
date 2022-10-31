@@ -53,6 +53,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StartTouch"",
+                    ""type"": ""Value"",
+                    ""id"": ""556cee6a-8f2d-47ea-a02d-2167dd23fec4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""HoldTouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""1ec918d7-b5a7-4dfd-9900-18456398c6a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -273,6 +291,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46be35fb-2a85-4440-8a94-835379429200"",
+                    ""path"": ""<Touchscreen>/primaryTouch/startPosition"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartTouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ac4a359-e549-46a4-a0ca-de6687c82215"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HoldTouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -863,6 +903,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_StartTouch = m_Player.FindAction("StartTouch", throwIfNotFound: true);
+        m_Player_HoldTouch = m_Player.FindAction("HoldTouch", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -937,6 +979,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_StartTouch;
+    private readonly InputAction m_Player_HoldTouch;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -944,6 +988,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @StartTouch => m_Wrapper.m_Player_StartTouch;
+        public InputAction @HoldTouch => m_Wrapper.m_Player_HoldTouch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -962,6 +1008,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @StartTouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartTouch;
+                @StartTouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartTouch;
+                @StartTouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartTouch;
+                @HoldTouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldTouch;
+                @HoldTouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldTouch;
+                @HoldTouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldTouch;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -975,6 +1027,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @StartTouch.started += instance.OnStartTouch;
+                @StartTouch.performed += instance.OnStartTouch;
+                @StartTouch.canceled += instance.OnStartTouch;
+                @HoldTouch.started += instance.OnHoldTouch;
+                @HoldTouch.performed += instance.OnHoldTouch;
+                @HoldTouch.canceled += instance.OnHoldTouch;
             }
         }
     }
@@ -1134,6 +1192,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnStartTouch(InputAction.CallbackContext context);
+        void OnHoldTouch(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
