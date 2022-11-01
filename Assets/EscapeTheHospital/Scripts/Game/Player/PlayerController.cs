@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 _dirMove;
     private CharacterController _cController;
     private float _fallingVelocity;
+    private GameManager _gameManager;
+    private bool _isStart, _isPause;
     public RectTransform joystickRectTrans;  
     public float gravity = -9.81f;
 
@@ -22,12 +24,15 @@ public class PlayerController : MonoBehaviour
     {
         _cController = GetComponent<CharacterController>();
         _pInput = new PlayerInputActions();
+
+        _velocityHash = Animator.StringToHash("Velocity");
+        _gameManager = GameManager.Instance;
+
     }
     // Start is called before the first frame update
     void Start()
     {
         _pAnimator = GetComponent<Animator>();
-        _velocityHash = Animator.StringToHash("Velocity");
         joystickRectTrans.position = new Vector2(9999999, 9999999);
     }
 
@@ -39,6 +44,11 @@ public class PlayerController : MonoBehaviour
         _pInput.Player.Move.canceled += GetDirMove;
         _pInput.Player.StartTouch.performed += ShowJoystick;
         _pInput.Player.HoldTouch.canceled += HideJoystick;
+
+        _gameManager.onStart.AddListener(OnStartGame);
+        _gameManager.onPause.AddListener(OnPauseGame);
+        _gameManager.onResume.AddListener(OnResumeGame);
+        _gameManager.onEndGame.AddListener(OnEndGame);
     }
 
     private void Update() 
@@ -70,9 +80,9 @@ public class PlayerController : MonoBehaviour
     }
 
        private void ShowJoystick(InputAction.CallbackContext ctx) {
-        // if(!isPause && isStart) {
+        if(!_isPause && _isStart) {
             joystickRectTrans.position = ctx.ReadValue<Vector2>();
-        // }
+        }
     }
 
     private void HandleGravity() {
@@ -95,11 +105,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
     private void HideJoystick(InputAction.CallbackContext ctx) {
         //hide joystick out of UI view
         joystickRectTrans.position = new Vector2(9999999, 9999999);
     }
+
+    private void OnStartGame()
+    {
+        _isStart = true;
+    }
+
+    private void OnPauseGame()
+    {
+        _isPause = true;
+    }
+
+    private void OnResumeGame()
+    {
+        _isPause = false;
+    }
+
+    private void OnEndGame(bool isWin)
+    {
+        _isPause = true;
+    }
+
+
 
     private void OnDisable()
     {
@@ -107,5 +138,10 @@ public class PlayerController : MonoBehaviour
         _pInput.Player.Move.canceled -= GetDirMove;
         _pInput.Player.StartTouch.performed -= ShowJoystick;
         _pInput.Player.HoldTouch.canceled -= HideJoystick;
+
+        _gameManager.onStart.RemoveListener(OnStartGame);
+        _gameManager.onPause.RemoveListener(OnPauseGame);
+        _gameManager.onResume.RemoveListener(OnResumeGame);
+        _gameManager.onEndGame.RemoveListener(OnEndGame);
     }
 }

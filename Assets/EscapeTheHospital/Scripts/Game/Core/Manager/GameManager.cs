@@ -13,9 +13,9 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent<Vector3> onPlayerDetected = new UnityEvent<Vector3>();
     // public UnityEvent<Vector3> onEnemyAlert = new UnityEvent<Vector3>();
     // public UnityEvent onEnemyAlertOff = new UnityEvent();
-    // public UnityEvent onStart = new UnityEvent();
-    // public UnityEvent onPause = new UnityEvent();
-    // public UnityEvent onResume = new UnityEvent();
+    public UnityEvent onStart = new UnityEvent();
+    public UnityEvent onPause = new UnityEvent();
+    public UnityEvent onResume = new UnityEvent();
     // public UnityEvent<int> onSelectItem = new UnityEvent<int>();
     // public UnityEvent<int> onBuyItem = new UnityEvent<int>();
     public UnityEvent<bool> onEndGame = new UnityEvent<bool>();
@@ -54,22 +54,22 @@ public class GameManager : Singleton<GameManager>
     //     onUpdateCoins?.Invoke(_playerData.currentCoins);
     // }
 
-    // public void StartGame()
-    // {
-    //     onStart?.Invoke();
-    // }
+    public void StartGame()
+    {
+        onStart?.Invoke();
+    }
 
-    // public void PauseGame()
-    // {
-    //     onPause?.Invoke();
-    //     Time.timeScale = 0;
-    // }
+    public void PauseGame()
+    {
+        onPause?.Invoke();
+        Time.timeScale = 0;
+    }
 
-    // public void ResumeGame()
-    // {
-    //     onResume?.Invoke();
-    //     Time.timeScale = 1;
-    // }
+    public void ResumeGame()
+    {
+        onResume?.Invoke();
+        Time.timeScale = 1;
+    }
 
     public void EndGame(bool win)
     {
@@ -158,6 +158,7 @@ public class GameManager : Singleton<GameManager>
     // {
     //     onPickUpKeyEvent?.Invoke();
     // }
+
 
     public void StartDoorEvent(int id)
     {
