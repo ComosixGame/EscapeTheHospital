@@ -73,9 +73,9 @@ public class GameManager : Singleton<GameManager>
 
     public void EndGame(bool win)
     {
-        // onPlayerCatched?.Invoke();
         _isWin = win;
         onEndGame?.Invoke(_isWin);
+        // onPlayerCatched?.Invoke();
         // onUpdateCoins?.Invoke(_playerData.currentCoins);
         // _playerData.SaveData();
     }

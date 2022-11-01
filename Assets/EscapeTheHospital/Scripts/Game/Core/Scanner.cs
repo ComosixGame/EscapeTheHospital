@@ -12,7 +12,7 @@ using UnityEditor;
 #endif
 public class Scanner
 {
-    public LayerMask layerMaskTarget, ignoreObstacle, layerMaskSubTarget;
+    public LayerMask layerMaskTarget, ignoreObstacle, layerMaskSubTarget, layerZoombie, layerScanner;
     public Material materialFieldOfView;
     private Mesh mesh;
     private MeshFilter meshFilterFOV;
@@ -94,7 +94,14 @@ public class Scanner
         }
 
         if(listHit.Count > 0) {
-            OnDetectedTarget?.Invoke(listHit);
+            if (!InvisibleController.isVisible)
+            {
+                OnDetectedTarget?.Invoke(listHit);
+            }
+            else if ((layerZoombie & (1 << layerScanner)) != 0)
+            {
+                OnDetectedTarget?.Invoke(listHit);
+            }
         } else {
             OnNotDetectedTarget?.Invoke();
         }

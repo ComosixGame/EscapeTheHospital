@@ -8,13 +8,15 @@ public class InvisibleController : MonoBehaviour
     public GameObject position;
     public LayerMask layer;
     public Material material;
+    public static bool isVisible = false;
 
     private void OnTriggerEnter(Collider other) 
     {
         if ((layer & (1 << other.gameObject.layer)) != 0)
         {
             other.GetComponentInChildren<Renderer>().material = material;
-            Destroy(this);
+            isVisible = true;
+            position.SetActive(false);
         }
     }
 

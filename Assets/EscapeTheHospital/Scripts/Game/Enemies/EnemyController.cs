@@ -29,6 +29,7 @@ public enum TypePatrol
     private State _state, _preState;
     private float _idleTime;
     private GameObject _fieldOfView;
+    private Animator _animator;
     [SerializeField]
     private Scanner _playerScanner = new Scanner();
     public Vector3 standPos;
@@ -42,8 +43,8 @@ public enum TypePatrol
     private void Awake() 
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
         _velocityHash = Animator.StringToHash("Velocity");
-
     }
 
     private void OnEnable() 
@@ -65,6 +66,7 @@ public enum TypePatrol
     {
         _playerScanner.Scan();
         StateManager();
+        HandleAnimation();
     }
 
     private void StateManager()
@@ -174,6 +176,19 @@ public enum TypePatrol
         _player = _playerScanner.DetectSingleTarget(hitList);
         _playerPosition = _player.position;
         GameManager.Instance.EndGame(false);
+    }
+
+    private void HandleAnimation() 
+    {
+        Vector3 horizontalVelocity = new Vector3(_agent.velocity.x, 0, _agent.velocity.z);
+        float Velocity = horizontalVelocity.magnitude/3;
+        if(Velocity > 0) {
+            _animator.SetFloat(_velocityHash, Velocity);
+        } else {
+            float v = _animator.GetFloat(_velocityHash);
+            v = Mathf.Lerp(v, -0.1f, 20f * Time.deltaTime);
+            _animator.SetFloat(_velocityHash, v);
+        }
     }
 
     private void OnDisable() 
