@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent onResume = new UnityEvent();
     // public UnityEvent<int> onSelectItem = new UnityEvent<int>();
     // public UnityEvent<int> onBuyItem = new UnityEvent<int>();
+    public UnityEvent<int> onUpdateDoc = new UnityEvent<int>();
     public UnityEvent<bool> onEndGame = new UnityEvent<bool>();
 
     // // //EventManager
@@ -57,7 +58,8 @@ public class GameManager : Singleton<GameManager>
     {
         _isLose = false;
         _playerData = PlayerData.LoadData();
-        onUpdateCoins?.Invoke(_playerData.currentCoins);
+        // onUpdateCoins?.Invoke(_playerData.currentCoins);
+        onUpdateDoc?.Invoke(_playerData.currentDocs);
     }
 
     public void StartGame()
@@ -84,7 +86,8 @@ public class GameManager : Singleton<GameManager>
         _isWin = win;
         onEndGame?.Invoke(_isWin);
         // onPlayerCatched?.Invoke();
-        onUpdateCoins?.Invoke(_playerData.currentCoins);
+        // onUpdateCoins?.Invoke(_playerData.currentCoins);
+        onUpdateDoc?.Invoke(_playerData.currentDocs);
         _playerData.SaveData();
     }
 
@@ -186,7 +189,14 @@ public class GameManager : Singleton<GameManager>
     public void UpdateCurrency (int coins)
     {
         _playerData.currentCoins += coins;
-        onUpdateCoins.Invoke(_playerData.currentCoins);
+        onUpdateCoins?.Invoke(_playerData.currentCoins);
+    }
+
+    public void UpdateDocs(int docs)
+    {
+        if (_isLose) return;
+        _playerData.currentDocs += docs;
+        onUpdateDoc?.Invoke(_playerData.currentDocs);
     }
 
     

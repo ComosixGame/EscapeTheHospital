@@ -30,7 +30,7 @@ public class GameDataManager<T> where T : class, new ()
     public static void SaveData (T data)
     {
         string _saveFile = Application.persistentDataPath + "/gamedata.json";
-            Debug.Log(_saveFile);
+        Debug.Log(_saveFile);
         // Serialize the object into JSON and save string.
         string jsonString = JsonUtility.ToJson(data);
 

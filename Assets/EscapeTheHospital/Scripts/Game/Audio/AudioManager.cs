@@ -1,27 +1,36 @@
 using UnityEngine.Audio;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    public Sound[] sounds;
+
+    private AudioSource audioSource;
+    private SettingData settingData;
+    public UnityEvent<bool> OnMute;
+
     protected override void Awake()
     {
         base.Awake();
-        foreach (Sound s in sounds)
-        {
-           s.source = gameObject.AddComponent<AudioSource>();
-           s.source.clip = s.clip;
-
-           s.source.volume = s.volume;
-           s.source.pitch = s.pitch;
-        }
+        settingData = SettingData.Load();
+        audioSource = GetComponent<AudioSource>();
+        Debug.Log(audioSource);
     }
 
-    public void Play(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Play();
+    private void Start() {
+        audioSource.mute = settingData.mute;
+    }
+
+    public void PlayOneShot(AudioClip audioClip, float volumeScale = 1) {
+        audioSource.PlayOneShot(audioClip, volumeScale);
+    }
+
+    public void MuteGame(bool mute) {
+        settingData.mute = mute;
+        settingData.Save();
+        audioSource.mute = mute;
+        OnMute?.Invoke(mute);
     }
 
 

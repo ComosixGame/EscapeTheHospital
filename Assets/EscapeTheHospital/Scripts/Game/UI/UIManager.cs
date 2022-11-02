@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     private int _CloseMenuHash;
     private Animator _animator;
 
+    public float volumeScale;
+
 
     private void Awake() 
     {
@@ -44,6 +46,10 @@ public class UIManager : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         _gameManager.ResumeGame();
+    }
+
+    public void PlaySound(AudioClip audioClip) {
+        _audioManager.PlayOneShot(audioClip, volumeScale);
     }
 
 

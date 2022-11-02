@@ -43,6 +43,12 @@ public class LoadScene : MonoBehaviour
         }
     }
 
+    public void Play()
+    {
+        int LatestLevel = PlayerData.LoadData().LatestLevel;
+        LoadNewScene(LatestLevel);
+    }
+
     public void ResetLevel(bool resumeGame) {
         if(resumeGame) {
             gameManager.ResumeGame();
