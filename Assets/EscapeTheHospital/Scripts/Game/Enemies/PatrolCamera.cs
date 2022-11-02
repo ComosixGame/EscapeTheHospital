@@ -10,6 +10,7 @@ public class PatrolCamera : MonoBehaviour
 	private Transform _player;
 	private Vector3 _playerPosition;
 	private GameManager _gameManager;
+	private bool _isStart;
     public float speed = 5;
 	public float waitTime = .3f;
 
@@ -27,24 +28,30 @@ public class PatrolCamera : MonoBehaviour
 	private void OnEnable() 
 	{
 		_playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
+		_gameManager.onStart.AddListener(OnStartGame);
 
 	}
 
 	void Start() 
 	{
 		_fieldOfView = _playerScanner.CreataFieldOfView(rootScanner, rootScanner.position, detectionAngle, viewDistance);
+		
+	}
 
+	void Update() 
+	{
+		_playerScanner.Scan();
+		
+	}
+
+	private void OnStartGame()
+	{
 		Vector3[] waypoints = new Vector3[pathHolder.childCount];
 		for (int i = 0; i < waypoints.Length; i++) {
 			waypoints [i] = pathHolder.GetChild (i).position;
 		}
 
 		StartCoroutine (FollowPath (waypoints));
-	}
-
-	void Update() 
-	{
-		_playerScanner.Scan();
 	}
 
 
@@ -55,7 +62,7 @@ public class PatrolCamera : MonoBehaviour
 		int targetWaypointIndex = 1;
 		Vector3 targetWaypoint = waypoints [targetWaypointIndex];
 		transform.LookAt (targetWaypoint);
-
+	
 		while (true) {
 			transform.position = Vector3.MoveTowards (transform.position, targetWaypoint, speed * Time.deltaTime);
 			if (transform.position == targetWaypoint) {
@@ -90,6 +97,7 @@ public class PatrolCamera : MonoBehaviour
 	private void OnDisable() 
 	{
 		_playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
+		_gameManager.onStart.RemoveListener(OnStartGame);
 	}
 
 	void OnDrawGizmos() 

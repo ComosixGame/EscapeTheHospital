@@ -13,6 +13,7 @@ public class TeleportController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             other.transform.position = destination.position;
+            Debug.Log(destination);
             other.gameObject.SetActive(true);
         }
     }
