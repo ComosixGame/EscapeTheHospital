@@ -1,23 +1,21 @@
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-// public class Key : MonoBehaviour
-// {
-//     public static bool isHasKey;
-//     private void Start() 
-//     {
-//         GameManager.onPickUpKeyEvent.AddListener(HasKey);
-//     }
-
-//     private void HasKey()
-//     {
-//         isHasKey = true;
-//     }
+public class Key : MonoBehaviour
+{
+    public static bool isHasKey = false;
+    public LayerMask layer;
+    public GameObject key;
     
-//     private void OnDisable() 
-//     {
-//         GameManager.onPickUpKeyEvent.RemoveListener(HasKey);
-//     }
+    private void OnTriggerEnter(Collider other) 
+    {
+        if ((layer & (1 << other.gameObject.layer)) != 0)
+        {
+            isHasKey = true;
+            key.SetActive(false);
+        }
+        
+    }
 
-// }
+}

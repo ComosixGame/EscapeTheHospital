@@ -9,6 +9,7 @@ public class PatrolCamera : MonoBehaviour
 	private GameObject _fieldOfView;
 	private Transform _player;
 	private Vector3 _playerPosition;
+	private GameManager _gameManager;
     public float speed = 5;
 	public float waitTime = .3f;
 
@@ -17,6 +18,17 @@ public class PatrolCamera : MonoBehaviour
     [Range(0, 360)]
     public float detectionAngle;
     public float viewDistance;
+	
+	private void Awake() 
+	{
+		_gameManager = GameManager.Instance;
+	}
+
+	private void OnEnable() 
+	{
+		_playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
+
+	}
 
 	void Start() 
 	{
@@ -28,15 +40,13 @@ public class PatrolCamera : MonoBehaviour
 		}
 
 		StartCoroutine (FollowPath (waypoints));
-
-		_playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
-
 	}
 
 	void Update() 
 	{
 		_playerScanner.Scan();
 	}
+
 
 	IEnumerator FollowPath(Vector3[] waypoints) 
 	{
@@ -69,6 +79,8 @@ public class PatrolCamera : MonoBehaviour
 	// 		yield return null;
 	// 	}
 	// }
+
+
 
 	public void HandleWhenDetected(List<RaycastHit> hitList) {
         Transform _player = _playerScanner.DetectSingleTarget(hitList);

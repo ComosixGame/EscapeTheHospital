@@ -30,6 +30,10 @@ public enum TypePatrol
     private float _idleTime;
     private GameObject _fieldOfView;
     private Animator _animator;
+
+    private GameManager _gameManager;
+
+    private bool _isStartGame;
     [SerializeField]
     private Scanner _playerScanner = new Scanner();
     public Vector3 standPos;
@@ -45,11 +49,13 @@ public enum TypePatrol
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _velocityHash = Animator.StringToHash("Velocity");
+        _gameManager = GameManager.Instance;
     }
 
     private void OnEnable() 
     {
         _playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
+        _gameManager.onStart.AddListener(OnStartGame);
     }
     // Start is called before the first frame update
     void Start()
@@ -65,6 +71,10 @@ public enum TypePatrol
     void Update()
     {
         _playerScanner.Scan();
+        if (!_isStartGame)
+        {
+            return;
+        }
         StateManager();
         HandleAnimation();
     }
@@ -191,9 +201,15 @@ public enum TypePatrol
         }
     }
 
+    private void OnStartGame()
+    {
+        _isStartGame = true;
+    }
+
     private void OnDisable() 
     {
         _playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
+        _gameManager.onStart.RemoveListener(OnStartGame);
     }
 }
 

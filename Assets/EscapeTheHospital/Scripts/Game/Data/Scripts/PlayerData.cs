@@ -13,6 +13,12 @@ public class PlayerData
     public List<int> totalPants;
     public List<int> totalShoes;
 
+      public int LatestLevel {
+        get { 
+            return totalLevels.Count > 0 ? totalLevels[totalLevels.Count - 1] : 0;
+        }
+    }
+
     public PlayerData ()
     {
         currentCoins  = 0;

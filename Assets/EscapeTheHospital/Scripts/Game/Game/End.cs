@@ -1,33 +1,19 @@
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-// public class End : MonoBehaviour
-// {
-//     private PlayerData _playerData;
-//     // Start is called before the first frame update
-//     void Start()
-//     {
-//         PlayerData.LoadData();
-//         GameManager.onEndEvent.AddListener(GameEnd);
-//     }
+public class End : MonoBehaviour
+{
+    public LayerMask layer;
+    private GameManager gameManager;
 
-//     private void GameEnd(int id)
-//     {
-//         if (Door.isWin)
-//         {
-//             _playerData.totalLevels.Add(id);
-//             // GameManager.Instance.UpdateCurrency();
-//         }
-//         else
-//         {
-//             // GameManager.Instance.UpdateCurrency();
-//         }
-//         _playerData.SaveData();
-//     }
+    private void Awake() {
+        gameManager = GameManager.Instance;
+    }
 
-//     private void OnDisable() 
-//     {
-//         GameManager.onEndEvent.RemoveListener(GameEnd); 
-//     }
-// }
+    private void OnTriggerEnter(Collider other) {
+        if((layer & (1 << other.gameObject.layer)) != 0 && Key.isHasKey) {
+            gameManager.EndGame(true);
+        }
+    }
+}

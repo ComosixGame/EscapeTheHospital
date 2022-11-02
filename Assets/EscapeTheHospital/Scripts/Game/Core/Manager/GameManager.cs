@@ -7,7 +7,6 @@ public class GameManager : Singleton<GameManager>
 {
     private PlayerData _playerData;
     private bool _isWin, _isLose;
-    private Scanner _scanner;
     public UnityEvent<int> onUpdateCoins = new UnityEvent<int>();
     public UnityEvent onPlayerCatched = new UnityEvent();
     public UnityEvent<Vector3> onPlayerDetected = new UnityEvent<Vector3>();
@@ -20,8 +19,8 @@ public class GameManager : Singleton<GameManager>
     // public UnityEvent<int> onBuyItem = new UnityEvent<int>();
     public UnityEvent<bool> onEndGame = new UnityEvent<bool>();
 
-    // //EventManager
-    public UnityEvent<int> onOpenDoor = new UnityEvent<int>();
+    // // //EventManager
+    // public UnityEvent<int> onOpenDoor = new UnityEvent<int>();
     // public static UnityEvent onPickUpKeyEvent = new UnityEvent();  
     // public static UnityEvent<int> onEndEvent = new UnityEvent<int>();
     // public static UnityEvent<int> onTeleportEvent = new UnityEvent<int>();
@@ -37,7 +36,7 @@ public class GameManager : Singleton<GameManager>
 
     void Start ()
     {
-        // InitGame();
+        InitGame();
         // FieldOfView.CatchedPlayer.Add;
     }
 
@@ -46,13 +45,20 @@ public class GameManager : Singleton<GameManager>
         // _scanner.OnDetectedTarget.AddListener(EndGame);
     }
 
+    public void UnlockNewLevel(int indexLevel) {
+        List<int> list = _playerData.totalLevels;
+        if(list.IndexOf(indexLevel) == -1) {
+            _playerData.totalLevels.Add(indexLevel);
+            _playerData.SaveData();
+        }
+    }
 
-    // public void InitGame ()
-    // {
-    //     _isLose = false;
-    //     _playerData = PlayerData.LoadData();
-    //     onUpdateCoins?.Invoke(_playerData.currentCoins);
-    // }
+    public void InitGame ()
+    {
+        _isLose = false;
+        _playerData = PlayerData.LoadData();
+        onUpdateCoins?.Invoke(_playerData.currentCoins);
+    }
 
     public void StartGame()
     {
@@ -71,13 +77,15 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1;
     }
 
+  
+
     public void EndGame(bool win)
     {
         _isWin = win;
         onEndGame?.Invoke(_isWin);
         // onPlayerCatched?.Invoke();
-        // onUpdateCoins?.Invoke(_playerData.currentCoins);
-        // _playerData.SaveData();
+        onUpdateCoins?.Invoke(_playerData.currentCoins);
+        _playerData.SaveData();
     }
 
     public void PlayerDetected(Vector3 playerPos)
@@ -160,10 +168,10 @@ public class GameManager : Singleton<GameManager>
     // }
 
 
-    public void StartDoorEvent(int id)
-    {
-        onOpenDoor.Invoke(id);
-    }
+    // public void StartDoorEvent(int id)
+    // {
+    //     onOpenDoor.Invoke(id);
+    // }
 
     // public static void EndGame(int id)
     // {
@@ -180,4 +188,6 @@ public class GameManager : Singleton<GameManager>
         _playerData.currentCoins += coins;
         onUpdateCoins.Invoke(_playerData.currentCoins);
     }
+
+    
 }
