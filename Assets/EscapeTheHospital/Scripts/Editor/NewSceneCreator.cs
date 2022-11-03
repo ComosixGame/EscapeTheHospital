@@ -44,7 +44,7 @@ public class NewSceneCreator : EditorWindow
 
         if (results.Length > 0)
         {
-            string originalScenePath = AssetDatabase.GUIDToAssetPath(results[0]);
+            string originalScenePath = AssetDatabase.GUIDToAssetPath(results[0]) +".unity";
             string newScenePath = "Assets/EscapeTheHospital/Scenes/" + m_NewSceneName + ".unity";
             if (!AssetDatabase.CopyAsset(originalScenePath, newScenePath))
             {

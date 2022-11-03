@@ -5,7 +5,6 @@ public class Player : MonoBehaviour
 {
     public Scripables scriptablePlayer;
     public CinemachineFreeLook cmFL;
-    public GameObject positionSpawn;
     public RectTransform joyStick;
     private GameObject _player;
     
@@ -16,7 +15,7 @@ public class Player : MonoBehaviour
         _player = scriptablePlayer.scriptableObjects[0].obj;
         //Choice Skin & Items
         //Do Something
-        Vector3 positionPlayer = positionSpawn.transform.position;
+        Vector3 positionPlayer = transform.position;
         GameObject _playerSpawn = Instantiate(_player,positionPlayer,Quaternion.identity);
         cmFL.Follow = _playerSpawn.transform;
         cmFL.LookAt = _playerSpawn.transform;    
