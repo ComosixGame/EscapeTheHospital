@@ -12,7 +12,6 @@ public class Key : MonoBehaviour
     {
         if ((layer & (1 << other.gameObject.layer)) != 0)
         {
-            Debug.Log(123);
             isHasKey = true;
             key.SetActive(false);
         }

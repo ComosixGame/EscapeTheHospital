@@ -46,7 +46,7 @@ public class Scanner
         // remove all element in list detect
         listHit.RemoveAll(el => true);
 
-        int rayCount = 50;
+        int rayCount = 25;
         float angelIncrease = fov/rayCount;
 
         //init vetex, uv, triangle
