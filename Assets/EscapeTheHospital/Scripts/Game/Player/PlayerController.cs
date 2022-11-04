@@ -11,12 +11,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 _inputMove;
     private float _velocity;
     private int _velocityHash;
+    private int _youWonHash;
+    private int _youLoseHash;
     [SerializeField] private float _speed = 10f;
     private Vector3 _dirMove;
     private CharacterController _cController;
     private float _fallingVelocity;
     private GameManager _gameManager;
     private bool _isStart, _isPause;
+ 
     public RectTransform joystickRectTrans;  
     public float gravity = -9.81f;
 
@@ -26,6 +29,9 @@ public class PlayerController : MonoBehaviour
         _pInput = new PlayerInputActions();
 
         _velocityHash = Animator.StringToHash("Velocity");
+        _youWonHash = Animator.StringToHash("Won");
+        _youLoseHash = Animator.StringToHash("Lose");
+
         _gameManager = GameManager.Instance;
 
     }
@@ -53,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update() 
     {
+        if (_isPause) return;
         MovePlayer();
         RotationLook();
         HandlAnimation();
@@ -127,6 +134,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnEndGame(bool isWin)
     {
+        if (!isWin)
+        {
+            _pAnimator.SetBool(_youLoseHash, true);
+        }else if (isWin)
+        {
+            _pAnimator.SetBool(_youWonHash, true);
+        }
         _isPause = true;
     }
 
