@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InvisibleController : MonoBehaviour
 {
-    private GameObject _player;
     public GameObject position;
     public LayerMask layer;
     public Material material;
@@ -27,6 +26,10 @@ public class InvisibleController : MonoBehaviour
             isVisible = true;
             position.SetActive(false);
         }
+    }
+
+    private void OnDestroy() {
+        isVisible = false;
     }
 
 }

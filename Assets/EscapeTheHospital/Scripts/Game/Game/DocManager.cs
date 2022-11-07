@@ -8,18 +8,20 @@ public class DocManager : MonoBehaviour
     [SerializeField] private int docs;
 
     private GameManager gameManager;
-    private AudioManager audioManager;
+    private AudioManager _audioManager;
+    public AudioClip audioClip;
+    [Range(0,1)] public float volumeScale;
 
     private void Awake() {
         gameManager = GameManager.Instance;
-        audioManager = AudioManager.Instance;
+        _audioManager = AudioManager.Instance;
     }
     
     private void OnTriggerEnter(Collider other) {
         Debug.Log(other.gameObject.layer);
         if((layer & (1 << other.gameObject.layer)) != 0) {
-            Debug.Log(123);
             // doc.SetActive(false);
+            _audioManager.PlayOneShot(audioClip, volumeScale);
             Destroy(gameObject);
             // soundManager.PlayOneShot(audioClip, volumeScale);
         } 
