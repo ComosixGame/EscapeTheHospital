@@ -61,8 +61,9 @@ public class LoadScene : MonoBehaviour
         LoadNewScene(levelIndex);
     }
 
-      public void LoadNextLevel() {
+    public void LoadNextLevel() {
         LoadNewScene(nextLevel);
+        
     }
 
     public void LoadNewScene(int index) {

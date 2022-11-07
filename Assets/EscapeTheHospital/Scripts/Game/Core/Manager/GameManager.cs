@@ -19,6 +19,7 @@ public class GameManager : Singleton<GameManager>
     // public UnityEvent<int> onBuyItem = new UnityEvent<int>();
     public UnityEvent<int> onUpdateDoc = new UnityEvent<int>();
     public UnityEvent<bool> onEndGame = new UnityEvent<bool>();
+    public UnityEvent<bool> onAdsCompelete = new UnityEvent<bool>();
 
     // // //EventManager
     // public UnityEvent<int> onOpenDoor = new UnityEvent<int>();
@@ -78,6 +79,11 @@ public class GameManager : Singleton<GameManager>
     {
         onResume?.Invoke();
         Time.timeScale = 1;
+    }
+
+    public void Done()
+    {
+        onAdsCompelete?.Invoke(true);
     }
 
   
