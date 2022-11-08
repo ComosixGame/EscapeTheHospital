@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BackgroundSound : MonoBehaviour
 {
-    public AudioClip audioWin, audioLose;
+    public AudioClip audioWin;
+    // public AudioClip audioLose;
     private AudioManager soundManager;
     private GameManager gameManager;
     private AudioSource audioSource;
@@ -28,9 +29,10 @@ public class BackgroundSound : MonoBehaviour
     private void OnEndGame(bool isWin) {
         if(isWin) {
             audioSource.clip = audioWin;
-        } else {
-            audioSource.clip = audioLose;
-        }
+        } 
+        // else {
+        //     audioSource.clip = audioLose;
+        // }
         StartCoroutine(PlayAudioEndGame());
     }
 

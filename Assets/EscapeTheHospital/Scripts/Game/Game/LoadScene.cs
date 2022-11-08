@@ -47,13 +47,13 @@ public class LoadScene : MonoBehaviour
     {
         int LatestLevel = PlayerData.LoadData().LatestLevel;
         Debug.Log(LatestLevel);
-        if (!(LatestLevel == 0))
-        {
-            LoadNewScene(LatestLevel);
-        }
-        else
+        if (LatestLevel == 0 || LatestLevel == 12)
         {
             LoadNewScene(2);
+        }
+        else  
+        {
+            LoadNewScene(LatestLevel);
         }
     }
 
@@ -73,14 +73,22 @@ public class LoadScene : MonoBehaviour
         operation.completed += InitGame;
     }
 
-    public void LoadStartScene()
+    public void LoadStartScene(bool resumeGame)
     {
+        if(resumeGame) {
+            gameManager.ResumeGame();
+        }
         LoadNewScene(0);
     }
 
     public void LoadShopScene()
     {
         LoadNewScene(1);
+    }
+
+    public void LoadThankScene()
+    {
+        LoadNewScene(12);
     }
 
     IEnumerator LoadAsync(int index) {
