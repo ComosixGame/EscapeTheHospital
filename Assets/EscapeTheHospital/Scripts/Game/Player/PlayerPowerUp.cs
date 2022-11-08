@@ -10,8 +10,6 @@ public class PlayerPowerUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvisibleTrigger.onInvisiblePlayer += InivisiblePlayer;
-        // _velocity = GetComponent<PlayerController>().velocity;
     }
 
     // Update is called once per frame

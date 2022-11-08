@@ -8,22 +8,31 @@ namespace Unity.Services.Mediation.Samples
     /// <summary>
     /// Sample Implementation of Unity Mediation
     /// </summary>
-    public class RewardedExample : MonoBehaviour
+    public class InterstitialExample : MonoBehaviour
     {
-        [Header("Ad Unit Ids"), Tooltip("Ad Unit Ids for each platform that represent Mediation waterfalls.")]
+        [Header("Ad Unit Ids"), Tooltip("Android Ad Unit Ids")]
         public string androidAdUnitId;
-        [Tooltip("Ad Unit Ids for each platform that represent Mediation waterfalls.")]
+
+        [Tooltip("iOS Ad Unit Ids")]
         public string iosAdUnitId;
 
-        IRewardedAd m_RewardedAd;
+        [Header("Game Ids"),
+         Tooltip("[Optional] Specifies the iOS GameId. Otherwise uses the GameId of the linked project.")]
+        public string iosGameId;
+
+        [Tooltip("[Optional] Specifies the Android GameId. Otherwise uses the GameId of the linked project.")]
+        public string androidGameId;
+
+        IInterstitialAd m_InterstitialAd;
 
         async void Start()
         {
             try
             {
                 Debug.Log("Initializing...");
-                await UnityServices.InitializeAsync();
+                await UnityServices.InitializeAsync(GetGameId());
                 Debug.Log("Initialized!");
+
                 InitializationComplete();
             }
             catch (Exception e)
@@ -34,47 +43,40 @@ namespace Unity.Services.Mediation.Samples
 
         void OnDestroy()
         {
-            m_RewardedAd?.Dispose();
+            m_InterstitialAd?.Dispose();
         }
-
-        public async void ShowRewarded()
+        
+        InitializationOptions GetGameId()
         {
-            if (m_RewardedAd?.AdState == AdState.Loaded)
+            var initializationOptions = new InitializationOptions();
+
+#if UNITY_IOS
+            if (!string.IsNullOrEmpty(iosGameId))
             {
-                try
-                {
-                    RewardedAdShowOptions showOptions = new RewardedAdShowOptions();
-                    showOptions.AutoReload = true;
-                    await m_RewardedAd.ShowAsync(showOptions);
-                    Debug.Log("Rewarded Shown!");
-                }
-                catch (ShowFailedException e)
-                {
-                    Debug.LogWarning($"Rewarded failed to show: {e.Message}");
-                }
+                initializationOptions.SetGameId(iosGameId);
             }
+#elif UNITY_ANDROID
+            if (!string.IsNullOrEmpty(androidGameId))
+            {
+                initializationOptions.SetGameId(androidGameId);
+            }
+#endif
+            return initializationOptions;
         }
 
-        public async void ShowRewardedWithOptions()
+        public async void ShowInterstitial()
         {
-            if (m_RewardedAd?.AdState == AdState.Loaded)
+            if (m_InterstitialAd?.AdState == AdState.Loaded)
             {
                 try
                 {
-                    //Here we provide a user id and custom data for server to server validation.
-                    RewardedAdShowOptions showOptions = new RewardedAdShowOptions();
-                    showOptions.AutoReload = true;
-                    S2SRedeemData s2SData;
-                    s2SData.UserId = "my cool user id";
-                    s2SData.CustomData = "{\"reward\":\"Gems\",\"amount\":20}";
-                    showOptions.S2SData = s2SData;
-
-                    await m_RewardedAd.ShowAsync(showOptions);
-                    Debug.Log("Rewarded Shown!");
+                    var showOptions = new InterstitialAdShowOptions { AutoReload = true };
+                    await m_InterstitialAd.ShowAsync(showOptions);
+                    Debug.Log("Interstitial Shown!");
                 }
                 catch (ShowFailedException e)
                 {
-                    Debug.LogWarning($"Rewarded failed to show: {e.Message}");
+                    Debug.Log($"Interstitial failed to show : {e.Message}");
                 }
             }
         }
@@ -83,7 +85,7 @@ namespace Unity.Services.Mediation.Samples
         {
             try
             {
-                await m_RewardedAd.LoadAsync();
+                await m_InterstitialAd.LoadAsync();
             }
             catch (LoadFailedException)
             {
@@ -99,16 +101,16 @@ namespace Unity.Services.Mediation.Samples
             switch (Application.platform)
             {
                 case RuntimePlatform.Android:
-                    m_RewardedAd = MediationService.Instance.CreateRewardedAd(androidAdUnitId);
+                    m_InterstitialAd = MediationService.Instance.CreateInterstitialAd(androidAdUnitId);
                     break;
 
                 case RuntimePlatform.IPhonePlayer:
-                    m_RewardedAd = MediationService.Instance.CreateRewardedAd(iosAdUnitId);
+                    m_InterstitialAd = MediationService.Instance.CreateInterstitialAd(iosAdUnitId);
                     break;
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.LinuxEditor:
-                    m_RewardedAd = MediationService.Instance.CreateRewardedAd(!string.IsNullOrEmpty(androidAdUnitId) ? androidAdUnitId : iosAdUnitId);
+                    m_InterstitialAd = MediationService.Instance.CreateInterstitialAd(!string.IsNullOrEmpty(androidAdUnitId) ? androidAdUnitId : iosAdUnitId);
                     break;
                 default:
                     Debug.LogWarning("Mediation service is not available for this platform:" + Application.platform);
@@ -116,15 +118,13 @@ namespace Unity.Services.Mediation.Samples
             }
 
             // Load Events
-            m_RewardedAd.OnLoaded += AdLoaded;
-            m_RewardedAd.OnFailedLoad += AdFailedLoad;
+            m_InterstitialAd.OnLoaded += AdLoaded;
+            m_InterstitialAd.OnFailedLoad += AdFailedLoad;
 
             // Show Events
-            m_RewardedAd.OnUserRewarded += UserRewarded;
-            m_RewardedAd.OnClosed += AdClosed;
+            m_InterstitialAd.OnClosed += AdClosed;
 
-            Debug.Log($"Initialized On Start. Loading Ad...");
-
+            Debug.Log("Initialized On Start! Loading Ad...");
             LoadAd();
         }
 
@@ -138,14 +138,9 @@ namespace Unity.Services.Mediation.Samples
             Debug.Log($"Initialization Failed: {initializationError}:{error.Message}");
         }
 
-        void UserRewarded(object sender, RewardEventArgs e)
-        {
-            Debug.Log($"User Rewarded! Type: {e.Type} Amount: {e.Amount}");
-        }
-
         void AdClosed(object sender, EventArgs args)
         {
-            Debug.Log("Rewarded Closed! Loading Ad...");
+            Debug.Log("Interstitial Closed! Loading Ad...");
         }
 
         void AdLoaded(object sender, EventArgs e)

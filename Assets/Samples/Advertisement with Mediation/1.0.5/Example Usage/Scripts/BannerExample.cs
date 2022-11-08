@@ -11,9 +11,9 @@ namespace Unity.Services.Mediation.Samples
         [Tooltip("iOS Ad Unit Ids")]
         public string iosAdUnitId;
 
-        [Header("Game Ids"), Tooltip("[Optional] Specifies the iOS GameId. Otherwise uses the dashboard provided GameId by default.")]
+        [Header("Game Ids"), Tooltip("[Optional] Specifies the iOS GameId. Otherwise uses the GameId of the linked project.")]
         public string iosGameId;
-        [Tooltip("[Optional] Specifies the Android GameId. Otherwise uses the dashboard provided GameId by default.")]
+        [Tooltip("[Optional] Specifies the Android GameId. Otherwise uses the GameId of the linked project.")]
         public string androidGameId;
 
         [Header("Banner options")]

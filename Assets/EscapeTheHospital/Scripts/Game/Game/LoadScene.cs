@@ -46,12 +46,15 @@ public class LoadScene : MonoBehaviour
     public void Play()
     {
         int LatestLevel = PlayerData.LoadData().LatestLevel;
-        if (LatestLevel == 0)
+        Debug.Log(LatestLevel);
+        if (!(LatestLevel == 0))
+        {
+            LoadNewScene(LatestLevel);
+        }
+        else
         {
             LoadNewScene(2);
         }
-        else
-        LoadNewScene(LatestLevel);
     }
 
     public void ResetLevel(bool resumeGame) {
@@ -63,12 +66,21 @@ public class LoadScene : MonoBehaviour
 
     public void LoadNextLevel() {
         LoadNewScene(nextLevel);
-        
     }
 
     public void LoadNewScene(int index) {
         StartCoroutine(LoadAsync(index));
         operation.completed += InitGame;
+    }
+
+    public void LoadStartScene()
+    {
+        LoadNewScene(0);
+    }
+
+    public void LoadShopScene()
+    {
+        LoadNewScene(1);
     }
 
     IEnumerator LoadAsync(int index) {
