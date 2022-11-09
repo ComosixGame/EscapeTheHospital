@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         if (_dirMove != Vector3.zero)
         {
             Quaternion rotLook = Quaternion.LookRotation(_dirMove);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotLook, 20f * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotLook, 40f * Time.deltaTime);
         }
     }
     private void GetDirMove(InputAction.CallbackContext ctx)
