@@ -9,7 +9,10 @@ using UnityEngine.UI;
 
     public class Interstitial : MonoBehaviour
     {
+
+        public Text text;
         public UnityEvent OnAdsDone = new UnityEvent();
+        public UnityEvent OnLoadAdsDone = new UnityEvent();
        [Header("Ad Unit Ids"), Tooltip("Android Ad Unit Ids")]
         public string androidAdUnitId;
 
@@ -90,7 +93,9 @@ using UnityEngine.UI;
             catch (LoadFailedException)
             {
                 // We will handle the failure in the OnFailedLoad callback
+                // text.text = "ABC";
             }
+            OnLoadAdsDone?.Invoke();
         }
 
         void InitializationComplete()
@@ -135,6 +140,7 @@ using UnityEngine.UI;
             {
                 initializationError = initializeFailedException.initializationError;
             }
+            text.text = error.Message;
             Debug.Log($"Initialization Failed: {initializationError}:{error.Message}");
         }
 
@@ -153,6 +159,7 @@ using UnityEngine.UI;
         {
             Debug.Log("Failed to load ad");
             Debug.Log(e.Message);
+            // text.text = e.Message;
         }
 
         void ImpressionEvent(object sender, ImpressionEventArgs args)

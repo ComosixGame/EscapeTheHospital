@@ -43,6 +43,7 @@ public enum TypePatrol
     [Range(0, 360)]
     public float detectionAngle;
     public float viewDistance;
+    public GameObject questionMask;
 
     private void Awake() 
     {
@@ -62,7 +63,8 @@ public enum TypePatrol
     {
         _fieldOfView = _playerScanner.CreataFieldOfView(rootScanner, rootScanner.position,detectionAngle,viewDistance);
         // GameEventManager.Instance.onDocumentTriggerEnter += StatePatrolEnter;
-        GameManager.Instance.onPlayerDetected.AddListener(StatePatrolEnter);
+        // GameManager.Instance.onPlayerDetected.AddListener(StatePatrolEnter);
+        _gameManager.onPlayerDetected.AddListener(StatePatrolEnter);
     }
 
 
@@ -185,6 +187,7 @@ public enum TypePatrol
     public void HandleWhenDetected(List<RaycastHit> hitList) {
         _player = _playerScanner.DetectSingleTarget(hitList);
         _playerPosition = _player.position;
+        // _playerPosition = _playerScanner.DetectSingleTarget(hitList).position;
         GameManager.Instance.EndGame(false);
     }
 

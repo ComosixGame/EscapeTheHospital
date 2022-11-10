@@ -3688,12 +3688,12 @@ PrefabInstance:
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
@@ -3704,7 +3704,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1783567959}
+      objectReference: {fileID: 2012760230}
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -3723,7 +3723,7 @@ PrefabInstance:
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlaySound
+      value: ResetLevel
       objectReference: {fileID: 0}
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
@@ -3733,7 +3733,7 @@ PrefabInstance:
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIManager, Assembly-CSharp
+      value: LoadScene, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
@@ -3744,7 +3744,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 8300000, guid: c45895085ac5446d5a1568ad01064679, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
@@ -3753,7 +3753,7 @@ PrefabInstance:
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.AudioClip, UnityEngine
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4361518947610900020, guid: c354ea71afdcf884f82fa00beb0d53d7,
         type: 3}
@@ -4684,6 +4684,7 @@ MonoBehaviour:
   rootScanner: {fileID: 802259561}
   detectionAngle: 90
   viewDistance: 8
+  questionMask: {fileID: 0}
 --- !u!1001 &984649628
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6734,6 +6735,7 @@ MonoBehaviour:
   rootScanner: {fileID: 1125655481}
   detectionAngle: 90
   viewDistance: 8
+  questionMask: {fileID: 0}
 --- !u!195 &1156175189
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11162,6 +11164,7 @@ MonoBehaviour:
   rootScanner: {fileID: 2080489792}
   detectionAngle: 70
   viewDistance: 8
+  questionMask: {fileID: 0}
 --- !u!1001 &1685828505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14347,7 +14350,7 @@ PrefabInstance:
     - target: {fileID: 3976470691925800471, guid: 5e246c9ddd2ea334f8b99bbcc002d350,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e246c9ddd2ea334f8b99bbcc002d350, type: 3}
@@ -14666,7 +14669,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020740385}
-  m_LocalRotation: {x: 0.54757977, y: -0.000000028794995, z: 0.000000018843727, w: 0.8367535}
+  m_LocalRotation: {x: 0.54757977, y: 0.000000028794995, z: -0.000000018843727, w: 0.8367535}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
