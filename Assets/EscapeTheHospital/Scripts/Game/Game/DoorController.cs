@@ -9,15 +9,23 @@ public class DoorController : MonoBehaviour
 {
     public Vector3 doorOpenPos;
     public LayerMask layer; 
-    private AudioManager _audioManager;
     public AudioClip audioClip;
+    private AudioManager _audioManager;
+    private GameManager gameManager;
+    private bool isHasKey;
 
     public Transform door;
     private bool isTrigger, opened;
     [Range(0,1)] public float volumeScale;
 
-    private void Awake() {
+    private void Awake() 
+    {
         _audioManager = AudioManager.Instance;
+    }
+
+    private void OnEnable() 
+    {
+        gameManager.onPlayerHasKey.AddListener(PlayerHasKey);
     }
 
     private void Update() {
@@ -32,16 +40,28 @@ public class DoorController : MonoBehaviour
         }
     }
 
+    private void PlayerHasKey(Vector3 pos)
+    {
+        isHasKey = true;
+    }
+
     private void OnTriggerEnter(Collider other) 
     {
         if(isTrigger) return;
-        if ((layer & (1 << other.gameObject.layer)) != 0 && Key.isHasKey)
+        if ((layer & (1 << other.gameObject.layer)) != 0 && isHasKey)
         // if (other.CompareTag("Player"))
         {
             isTrigger =  true;
             _audioManager.PlayOneShot(audioClip, volumeScale);
         }
     }
+
+    private void OnDisable() 
+    {
+        gameManager.onPlayerHasKey.RemoveListener(PlayerHasKey);
+        // isHasKey = false;
+    }
+    
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {

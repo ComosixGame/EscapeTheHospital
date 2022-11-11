@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
+    private AudioManager _audioManager;
+    private GameManager gameManager;
     public static bool isHasKey = false;
     public LayerMask layer;
     public GameObject key;
 
-    private AudioManager _audioManager;
     public AudioClip audioClip;
 
     [Range(0,1)] public float volumeScale;
 
-    private void Awake() {
+    private void Awake() 
+    {
         _audioManager = AudioManager.Instance;
     }
     

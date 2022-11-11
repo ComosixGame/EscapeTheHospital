@@ -2,28 +2,31 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [System.Serializable]
-public class Enemy : Person
+public abstract class Enemy : MonoBehaviour
 {
-    public int          patrolIndex { get; protected set;}
-    public Vector3      playerPosition { get; protected set;}
-    public EnemyState   enemyState { get; protected set;}
-    public EnemyState   preState { get; protected set;}
-    public int          velocityHash { get; protected set;}
-    public NavMeshAgent agent { get; protected set;}
-    public float        idleTime { get; protected set;}
-    public bool         isStart { get; protected set;}
-    public bool         isEnd { get; protected set;}
-    public GameObject   fieldOfView { get; set;}
-    public Animator     animator { get; protected set;}
-    public GameManager  gameManager { get; protected set;}
-    public Vector3      standPos;
-    public Vector3[]    patrolList;
-    public Transform    rootScanner;
+    protected int          patrolIndex;
+    protected Vector3      pos;
+    protected EnemyState   enemyState;
+    protected EnemyState   preState;
+    protected int          velocityHash;
+    protected NavMeshAgent agent;
+    protected float        idleTime;
+    protected bool         isStart;
+    protected bool         isEnd;
+    protected GameObject   fieldOfView;
+    
+    protected Animator     animator;
+    protected GameManager  gameManager;
+    public Vector3         standPos;
+    public Vector3[]       patrolList;
+    public Transform       rootScanner;
     [Range(0, 360)] 
-    public float        detectionAngle;
-    public float        viewDistance;
-    [SerializeField]
-    private Scanner playerScanner = new Scanner();
+    public float           detectionAngle;
+    public float           viewDistance;
+    public EnemyTypePatrol typePatrol;
+    public Vector3         keyPos;
+    public Vector3         doorPos;
+    [SerializeField] public Scanner playerScanner = new Scanner();
 
     protected virtual void Awake() 
     {
@@ -33,11 +36,10 @@ public class Enemy : Person
         gameManager  = GameManager.Instance;
     }
 
-    private void OnEnable() 
+    protected virtual void OnEnable() 
     {
         gameManager.onStart.AddListener(OnStartGame);
         gameManager.onEndGame.AddListener(OnEndGame);
-        gameManager.onPlayerDetected.AddListener(PatrolWhenDetected);
     }
 
     // Start is called before the first frame update
@@ -50,11 +52,7 @@ public class Enemy : Person
     protected virtual void Update()
     {
         playerScanner.Scan();
-    }
-
-    public Enemy()
-    {
-
+        HandlAnimation();
     }
 
     protected virtual void OnStartGame()
@@ -62,14 +60,67 @@ public class Enemy : Person
         isStart = true;
     }
 
-    protected virtual void PatrolWhenDetected(Vector3 pos)
-    {
+    protected abstract void StateManager();
 
+    protected virtual void Idle()
+    {
+        idleTime += Time.deltaTime;
+        agent.SetDestination(transform.position);
     }
 
-    protected override void HandlAnimation()
+    protected virtual void Patrol()
     {
-        base.HandlAnimation();
+        {
+            Vector3 patrolPoint = patrolList[patrolIndex];
+            switch (typePatrol)
+            {   
+                case EnemyTypePatrol.StandInPlace:
+                    agent.SetDestination(standPos);
+                    if (agent.remainingDistance <= agent.stoppingDistance)
+                    idleTime += Time.deltaTime;
+                    transform.rotation = LerpRotation(patrolPoint, transform.position, 10f); 
+                    {
+                        if (idleTime > 2)
+                        {
+                            patrolIndex++;
+                            if (patrolIndex >= patrolList.Length)
+                            {
+                                patrolIndex = 0;
+                            }
+                            idleTime = 0;
+                        }  
+                    }
+                    break;
+                case EnemyTypePatrol.MoveAround:
+                    if (agent.remainingDistance <= agent.stoppingDistance)
+                    {   
+                        idleTime += Time.deltaTime;
+                        if (idleTime > 2)
+                        {
+                            patrolIndex++;
+                            if (patrolIndex >= patrolList.Length)
+                            {
+                                patrolIndex = 0;
+                            }
+                            agent.SetDestination(patrolPoint);
+                            idleTime = 0;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    protected abstract void PatrolWhenDetected();
+
+    protected abstract void PatrolWhenLostElectric();
+
+    protected abstract void PatrolWhenLostKey();
+
+    protected virtual void HandlAnimation()
+    {
         Vector3 horizontalVelocity = new Vector3(agent.velocity.x, 0, agent.velocity.z);
         float Velocity = horizontalVelocity.magnitude/3;
         if(Velocity > 0) {
@@ -80,9 +131,6 @@ public class Enemy : Person
             animator.SetFloat(velocityHash, v);
         }
     }
-
-
-
     protected virtual Quaternion LerpRotation(Vector3 pos1, Vector3 pos2, float speed)
     {
         Vector3 dirLook = pos1 - pos2;
@@ -97,10 +145,9 @@ public class Enemy : Person
 
     }
 
-    private void OnDisable() 
+    protected virtual void OnDisable() 
     {
         gameManager.onStart.RemoveListener(OnStartGame);
         gameManager.onEndGame.RemoveListener(OnEndGame);
-        gameManager.onPlayerDetected.RemoveListener(PatrolWhenDetected);
     }
 }
