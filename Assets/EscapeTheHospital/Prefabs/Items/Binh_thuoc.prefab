@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 209669391260094803}
   - component: {fileID: 6074261226122205772}
   - component: {fileID: 6589230407144531982}
-  - component: {fileID: 1621607474988296337}
+  - component: {fileID: 3108752455875519667}
   m_Layer: 0
   m_Name: Binh_thuoc
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.00748004, y: 0.011236304, z: 0.00748004}
   m_Center: {x: 1.1641532e-10, y: 0.0013681084, z: 0}
---- !u!114 &1621607474988296337
+--- !u!114 &3108752455875519667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,13 +107,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3194503100805787813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4ca4911270ef0343a29dc9ac1c95d55, type: 3}
+  m_Script: {fileID: 11500000, guid: 902e7c5edf285b540b9a4f1455088e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {fileID: 3194503100805787813}
+  poison: {fileID: 0}
   layer:
     serializedVersion: 2
     m_Bits: 512
   material: {fileID: 2100000, guid: 8075224930ce27d46bb0f098f2c6f152, type: 2}
+  volumeScale: 0.9
   audioClip: {fileID: 8300000, guid: 0de3653330c1eca439e0c97d1a97b749, type: 3}
-  volumeScale: 0.5

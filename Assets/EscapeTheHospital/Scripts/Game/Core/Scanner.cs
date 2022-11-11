@@ -18,12 +18,12 @@ public class Scanner
     private MeshFilter meshFilterFOV;
     private float fov, ViewDistence;
     private Transform _detector;
+    private  bool isVisible = false;
     private List<RaycastHit> listHit = new List<RaycastHit>();
     public UnityEvent<List<RaycastHit>> OnDetectedTarget;
     public UnityEvent<Transform> OnDetectedSubTarget;
     public UnityEvent OnNotDetectedTarget;
-    
-    
+
     public GameObject CreataFieldOfView(Transform detector, Vector3 pos, float angel, float distance) {
         //creata field of view
         _detector = detector;
@@ -40,6 +40,12 @@ public class Scanner
         fov = angel;
         ViewDistence = distance;
         return FieldOfView;
+    }
+
+    public void PlayerCanInvisible()
+    {
+        isVisible = true;
+        Debug.Log(isVisible);
     }
 
     public void Scan() {
@@ -94,7 +100,7 @@ public class Scanner
         }
 
         if(listHit.Count > 0) {
-            if (!InvisibleController.isVisible)
+            if (!isVisible)
             {
                 OnDetectedTarget?.Invoke(listHit);
             }
@@ -140,6 +146,9 @@ public class Scanner
         int hitIndex = Array.IndexOf(distences, minDistence);
         return listRaycast[hitIndex].transform;
     }
+
+
+
 
 
 #if UNITY_EDITOR

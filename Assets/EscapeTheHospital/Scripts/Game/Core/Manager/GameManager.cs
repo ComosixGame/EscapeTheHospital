@@ -10,7 +10,8 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent<int> onUpdateCoins = new UnityEvent<int>();
     public UnityEvent onPlayerCatched = new UnityEvent();
     public UnityEvent<Vector3> onPlayerDetected = new UnityEvent<Vector3>();
-    public UnityEvent<Vector3> onPlayerHasKey = new UnityEvent<Vector3>();
+    public UnityEvent<Vector3> OnDetectedLostkey = new UnityEvent<Vector3>();
+    public UnityEvent OnPlayerInvisible = new UnityEvent();
 
     public UnityEvent onStart = new UnityEvent();
     public UnityEvent onPause = new UnityEvent();
@@ -23,6 +24,11 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         _playerData = PlayerData.LoadData();
+    }
+
+    private void OnEnable() 
+    {
+        
     }
 
     void Start ()
@@ -86,7 +92,12 @@ public class GameManager : Singleton<GameManager>
 
     public void PlayerHaskKey(Vector3 keyPos)
     {
-        onPlayerHasKey?.Invoke(keyPos);
+        OnDetectedLostkey?.Invoke(keyPos);
+    }
+
+    public void PlayerInvisible()
+    {
+        OnPlayerInvisible?.Invoke();
     }
 
     public void UpdateCurrency (int coins)

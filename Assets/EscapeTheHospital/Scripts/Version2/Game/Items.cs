@@ -6,12 +6,15 @@ using System;
 
 public class Items 
 {
-    public UnityEvent<Vector3> OnDetectedTarget = new UnityEvent<Vector3>();
+    private Scanner scanner = new Scanner();
     public void DectectedLostKey(Vector3 pos)
     {
-        // if ()
-        // {
-        //     OnDetectedTarget?.Invoke(pos);
-        // }
+        GameManager.Instance.PlayerHaskKey(pos);
     }
+
+    public void PlayerPickPoison()
+    {
+        scanner.PlayerCanInvisible();
+    }
+
 }

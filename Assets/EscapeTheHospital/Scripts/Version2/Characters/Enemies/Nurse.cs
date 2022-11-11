@@ -17,7 +17,8 @@ public class Nurse : Enemy
     {
         base.OnEnable();
         gameManager.onPlayerDetected.AddListener(StatePatrolDetected);
-        gameManager.onPlayerHasKey.AddListener(StateLostKey);
+        gameManager.OnDetectedLostkey.AddListener(StatePatrolLostKey);
+        playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
     }
 
     protected override void Update()
@@ -25,6 +26,7 @@ public class Nurse : Enemy
         base.Update();
         //To do
         StateManager();
+        playerScanner.Scan();
     }
 
     protected override void StateManager()
@@ -86,28 +88,36 @@ public class Nurse : Enemy
         state = EnemyState.PatrolDetected;
     }
 
-    private void StateLostKey(Vector3 keyPos)
+    private void StatePatrolLostKey(Vector3 keyPos)
     {
-        Debug.Log(123);
         pos = keyPos;
         state = EnemyState.PatrolKey;
     }
 
-    private void HandleWhenDetected(List<RaycastHit> hitList)
+    private void StateLostKey(Vector3 keyPos)
     {
+        pos = keyPos;
+        state = EnemyState.PatrolKey;
+    }
+
+    public void HandleWhenDetected(List<RaycastHit> hitList)
+    {
+        Debug.Log("23Ad");
         pos = playerScanner.DetectSingleTarget(hitList).position;
-        gameManager.EndGame(false);
+        GameManager.Instance.EndGame(false);
     }
 
     protected override void OnEndGame(bool end)
     {
         base.OnEndGame(end);
+        Debug.Log(125);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         gameManager.onPlayerDetected.RemoveListener(StatePatrolDetected);
-        gameManager.onPlayerHasKey.RemoveListener(StateLostKey);
+        gameManager.OnDetectedLostkey.RemoveListener(StatePatrolLostKey);
+        playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
     }
 }

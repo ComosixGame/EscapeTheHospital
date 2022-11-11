@@ -12,7 +12,7 @@ public class End : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if((layer & (1 << other.gameObject.layer)) != 0 && Key.isHasKey) {
+        if((layer & (1 << other.gameObject.layer)) != 0) {
             gameManager.EndGame(true);
         }
     }

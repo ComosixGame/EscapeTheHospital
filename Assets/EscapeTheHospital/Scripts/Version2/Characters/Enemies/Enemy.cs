@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 [System.Serializable]
 public abstract class Enemy : MonoBehaviour
@@ -140,6 +141,11 @@ public abstract class Enemy : MonoBehaviour
         return Quaternion.Lerp(transform.rotation, rotLook, speed*Time.deltaTime);
     }
 
+    // protected void HandleWhenDetected(List<RaycastHit> hitlist)
+    // {
+    //     pos = playerScanner.DetectSingleTarget(hitlist).position;
+    //     GameManager.Instance.EndGame(false);
+    // }
     protected virtual void OnEndGame(bool end)
     {
 

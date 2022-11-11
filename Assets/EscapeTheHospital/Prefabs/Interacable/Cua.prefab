@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8936266774243464499}
   - component: {fileID: 3671631883387570598}
-  - component: {fileID: 5209215869747552204}
+  - component: {fileID: 4983608385836128520}
   m_Layer: 12
   m_Name: Trigger
   m_TagString: Untagged
@@ -46,7 +46,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.04
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5209215869747552204
+--- !u!114 &4983608385836128520
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4286361829126462389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad298b96697bf44d827abcd66d92b86, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cd1d9e9d9345114bbae2ec122205d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   doorOpenPos: {x: -10.525, y: 0, z: -8.1}
@@ -64,7 +64,7 @@ MonoBehaviour:
     m_Bits: 512
   audioClip: {fileID: 8300000, guid: 30261186851a48e4bbbabc6dfc8eb6ce, type: 3}
   door: {fileID: 4825170914689300411}
-  volumeScale: 0.5
+  volumeScale: 0.9
 --- !u!1 &4751073314597343622
 GameObject:
   m_ObjectHideFlags: 0
