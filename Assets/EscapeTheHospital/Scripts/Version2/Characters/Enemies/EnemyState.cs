@@ -6,5 +6,7 @@ public enum EnemyState
     Patrol,
     PatrolDetected,
     PatrolElectric,
-    PatrolKey
+    PatrolKey,
+    Win,
+    Lose
 }

@@ -42,11 +42,6 @@ public class Scanner
         return FieldOfView;
     }
 
-    public void PlayerCanInvisible()
-    {
-        isVisible = true;
-        Debug.Log(isVisible);
-    }
 
     public void Scan() {
         // remove all element in list detect
@@ -99,18 +94,15 @@ public class Scanner
             ScanSubTarget(origin, rangeScan, ref detectSubTarget);
         }
 
-        if(listHit.Count > 0) {
-            if (!isVisible)
-            {
-                OnDetectedTarget?.Invoke(listHit);
-            }
-            else if ((layerZoombie & (1 << layerScanner)) != 0)
-            {
-                OnDetectedTarget?.Invoke(listHit);
-            }
-        } else {
+        if (listHit.Count > 0)
+        {
+            OnDetectedTarget?.Invoke(listHit);
+        }
+        else
+        {
             OnNotDetectedTarget?.Invoke();
         }
+
         
         mesh.vertices = vertices;
         mesh.uv = uv;

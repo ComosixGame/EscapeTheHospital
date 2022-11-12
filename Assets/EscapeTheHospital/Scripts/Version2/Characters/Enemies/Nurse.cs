@@ -34,19 +34,67 @@ public class Nurse : Enemy
         switch(state)
         {
             case EnemyState.Idle:
+                // questionMask.SetActive(false);
+                // exclanmationMask.SetActive(false);
+                // lostEleMask.SetActive(false);
+                // lostKeyMask.SetActive(false);
+                // tickMask.SetActive(false);
+                // xMask.SetActive(false);
                 Idle();
                 break;
             case EnemyState.Patrol:
+                // questionMask.SetActive(true);
+                // exclanmationMask.SetActive(false);
+                // lostEleMask.SetActive(false);
+                // lostKeyMask.SetActive(false);
+                // tickMask.SetActive(false);
+                // xMask.SetActive(false);
                 Patrol();
                 break;
             case EnemyState.PatrolDetected:
+                // exclanmationMask.SetActive(true);
+                // questionMask.SetActive(false);
+                // lostEleMask.SetActive(false);
+                // lostKeyMask.SetActive(false);
+                // tickMask.SetActive(false);
+                // xMask.SetActive(false);
                 PatrolWhenDetected();
                 break;
             case EnemyState.PatrolElectric:
+                // lostEleMask.SetActive(true);
+                // exclanmationMask.SetActive(false);
+                // questionMask.SetActive(false);
+                // lostKeyMask.SetActive(false);
+                // tickMask.SetActive(false);
+                // xMask.SetActive(false);
                 PatrolWhenLostElectric();
                 break;
             case EnemyState.PatrolKey:
+                // lostKeyMask.SetActive(true);
+                // questionMask.SetActive(false);
+                // exclanmationMask.SetActive(false);
+                // lostEleMask.SetActive(false);
+                // tickMask.SetActive(false);
+                // xMask.SetActive(false);
                 PatrolWhenLostKey();
+                break;
+            case EnemyState.Win:
+                // tickMask.SetActive(true);
+                // lostKeyMask.SetActive(false);
+                // questionMask.SetActive(false);
+                // exclanmationMask.SetActive(false);
+                // lostEleMask.SetActive(false);
+                // xMask.SetActive(false);
+                break;
+            case EnemyState.Lose:
+                // xMask.SetActive(true);
+                // lostKeyMask.SetActive(false);
+                // questionMask.SetActive(false);
+                // exclanmationMask.SetActive(false);
+                // lostEleMask.SetActive(false);
+                // tickMask.SetActive(false);
+                break;
+            default:
                 break;
         }
     }
@@ -102,7 +150,6 @@ public class Nurse : Enemy
 
     public void HandleWhenDetected(List<RaycastHit> hitList)
     {
-        Debug.Log("23Ad");
         pos = playerScanner.DetectSingleTarget(hitList).position;
         GameManager.Instance.EndGame(false);
     }
@@ -110,7 +157,6 @@ public class Nurse : Enemy
     protected override void OnEndGame(bool end)
     {
         base.OnEndGame(end);
-        Debug.Log(125);
     }
 
     protected override void OnDisable()

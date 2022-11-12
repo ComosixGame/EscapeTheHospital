@@ -5,13 +5,20 @@ using System.Collections.Generic;
 [System.Serializable]
 public abstract class Enemy : MonoBehaviour
 {
+    protected float        speed = 3;
+    protected float        speedPatrol = 5;
+    protected float        angularSpeed = 120;
+    protected float        acceleration = 8;
+    protected float        idleTime = 2;
+    protected float        alertTime = 10;
+    protected float        speedRotation = 7;
     protected int          patrolIndex;
+    protected float        IdleTime;
     protected Vector3      pos;
     protected EnemyState   enemyState;
     protected EnemyState   preState;
     protected int          velocityHash;
     protected NavMeshAgent agent;
-    protected float        idleTime;
     protected bool         isStart;
     protected bool         isEnd;
     protected GameObject   fieldOfView;
@@ -78,25 +85,25 @@ public abstract class Enemy : MonoBehaviour
                 case EnemyTypePatrol.StandInPlace:
                     agent.SetDestination(standPos);
                     if (agent.remainingDistance <= agent.stoppingDistance)
-                    idleTime += Time.deltaTime;
+                    IdleTime += Time.deltaTime;
                     transform.rotation = LerpRotation(patrolPoint, transform.position, 10f); 
                     {
-                        if (idleTime > 2)
+                        if (IdleTime > idleTime)
                         {
                             patrolIndex++;
                             if (patrolIndex >= patrolList.Length)
                             {
                                 patrolIndex = 0;
                             }
-                            idleTime = 0;
+                            IdleTime = 0;
                         }  
                     }
                     break;
                 case EnemyTypePatrol.MoveAround:
                     if (agent.remainingDistance <= agent.stoppingDistance)
                     {   
-                        idleTime += Time.deltaTime;
-                        if (idleTime > 2)
+                        IdleTime += Time.deltaTime;
+                        if (IdleTime > idleTime)
                         {
                             patrolIndex++;
                             if (patrolIndex >= patrolList.Length)
@@ -104,7 +111,7 @@ public abstract class Enemy : MonoBehaviour
                                 patrolIndex = 0;
                             }
                             agent.SetDestination(patrolPoint);
-                            idleTime = 0;
+                            IdleTime = 0;
                         }
                     }
                     break;
