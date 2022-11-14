@@ -32,8 +32,6 @@ public abstract class Enemy : MonoBehaviour
     public float           detectionAngle;
     public float           viewDistance;
     public EnemyTypePatrol typePatrol;
-    public Vector3         keyPos;
-    public Vector3         doorPos;
     [SerializeField] public Scanner playerScanner = new Scanner();
 
     protected virtual void Awake() 

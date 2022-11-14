@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Key : MonoBehaviour
@@ -8,7 +6,10 @@ public class Key : MonoBehaviour
     private AudioManager audioManager;
     public  LayerMask layer;
     public  GameObject key;
-    public AudioClip audioClip;
+    public  AudioClip audioClip;
+    public  GameObject effectWow;
+    public  GameObject effectHit;
+
     [Range(0,1)] public float volumeScale;
 
     private void Awake() 
@@ -20,9 +21,11 @@ public class Key : MonoBehaviour
     {
         if ((layer & (1 << other.gameObject.layer)) != 0)
         {
-            // audioManager.PlayOneShot(audioClip, volumeScale);
+            audioManager.PlayOneShot(audioClip, volumeScale);
             items.DectectedLostKey(key.transform.position);
             key.SetActive(false);
+            effectWow.SetActive(true);
+            effectHit.SetActive(false);
         }
     }
 }

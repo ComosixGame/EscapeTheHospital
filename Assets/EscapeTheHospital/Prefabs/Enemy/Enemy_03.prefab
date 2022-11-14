@@ -626,7 +626,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4773925956426978567}
   - component: {fileID: 1486267633327476605}
-  - component: {fileID: 5029075065015973869}
   - component: {fileID: 5029075065015973871}
   m_Layer: 11
   m_Name: Enemy_03
@@ -673,53 +672,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5029075065015973869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5263499539551653821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80baef91358f6384bb33f2388b984686, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerScanner:
-    layerMaskTarget:
-      serializedVersion: 2
-      m_Bits: 0
-    ignoreObstacle:
-      serializedVersion: 2
-      m_Bits: 7940
-    layerMaskSubTarget:
-      serializedVersion: 2
-      m_Bits: 0
-    layerZoombie:
-      serializedVersion: 2
-      m_Bits: 1
-    layerScanner:
-      serializedVersion: 2
-      m_Bits: 2048
-    materialFieldOfView: {fileID: 2100000, guid: cf865986eace023479a2bccfbb0abbfd,
-      type: 2}
-    OnDetectedTarget:
-      m_PersistentCalls:
-        m_Calls: []
-    OnDetectedSubTarget:
-      m_PersistentCalls:
-        m_Calls: []
-    OnNotDetectedTarget:
-      m_PersistentCalls:
-        m_Calls: []
-  standPos: {x: -10.25, y: 0, z: -9.76}
-  typePatrol: 1
-  patrolList:
-  - {x: -10.33885, y: 0, z: -20.349052}
-  - {x: -10.260378, y: 0, z: 6.268654}
-  rootScanner: {fileID: 1013369914890040723}
-  detectionAngle: 50
-  viewDistance: 4
 --- !u!195 &5029075065015973871
 NavMeshAgent:
   m_ObjectHideFlags: 0

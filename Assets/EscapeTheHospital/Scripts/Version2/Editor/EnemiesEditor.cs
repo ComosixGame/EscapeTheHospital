@@ -15,8 +15,6 @@ public class EnemiesEditor : Editor
                 CustomStandPoint(t);
             }
         }
-        CustomDoorPoint(t);
-        CustomKeyPoint(t);
     }
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
@@ -107,34 +105,6 @@ public class EnemiesEditor : Editor
         if(EditorGUI.EndChangeCheck()) {
             Undo.RecordObject(t, "Update stand point");
             t.standPos = newPos;
-            EditorUtility.SetDirty(t);
-        }
-    }
-
-    private void CustomKeyPoint(Enemy t)
-    {
-        Handles.Label(t.keyPos,"Key Pos","TextField");
-        Handles.color = Color.yellow;
-        Handles.DrawDottedLine(t.keyPos, t.transform.position,2);
-        EditorGUI.BeginChangeCheck();
-        Vector3 newPos = Handles.PositionHandle(t.keyPos, Quaternion.identity);
-        if(EditorGUI.EndChangeCheck()) {
-            Undo.RecordObject(t, "Update key point");
-            t.keyPos = newPos;
-            EditorUtility.SetDirty(t);
-        }
-    }
-
-    private void CustomDoorPoint(Enemy t)
-    {
-        Handles.Label(t.doorPos,"Door Pos","TextField");
-        Handles.color = Color.yellow;
-        Handles.DrawDottedLine(t.doorPos, t.transform.position,2);
-        EditorGUI.BeginChangeCheck();
-        Vector3 newPos = Handles.PositionHandle(t.doorPos, Quaternion.identity);
-        if(EditorGUI.EndChangeCheck()) {
-            Undo.RecordObject(t, "Update door point");
-            t.doorPos = newPos;
             EditorUtility.SetDirty(t);
         }
     }

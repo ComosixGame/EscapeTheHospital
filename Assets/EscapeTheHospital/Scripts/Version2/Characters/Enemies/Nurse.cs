@@ -9,16 +9,22 @@ public class Nurse : Enemy
     public GameObject lostEleMask;
     public GameObject tickMask;
     public GameObject xMask;
-    public Vector3 Keypos;
-    public Vector3 Doorpos;
     private EnemyState state;
-
+    private float nurseIdleSpeed = 5.5f;
+    private float nurseIdleAngularSpeed = 120;
+    private float nursePatrolSpeed = 6f;
+    private float nursePatrolAngularSpeed = 140;
+    private float nurseKeySpeed = 7f;
+    private float nurseKeyAngularSpeed = 150;
+    private float nurseElecSpeed = 4f;
+    private float nurseElecAngularSpeed = 100;
     protected override void OnEnable()
     {
         base.OnEnable();
         gameManager.onPlayerDetected.AddListener(StatePatrolDetected);
         gameManager.OnDetectedLostkey.AddListener(StatePatrolLostKey);
         playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
+        gameManager.OnElectricOff.AddListener(StateLostElectric);
     }
 
     protected override void Update()
@@ -40,6 +46,8 @@ public class Nurse : Enemy
                 // lostKeyMask.SetActive(false);
                 // tickMask.SetActive(false);
                 // xMask.SetActive(false);
+                agent.speed = nurseIdleSpeed;
+                agent.angularSpeed = nurseIdleAngularSpeed;
                 Idle();
                 break;
             case EnemyState.Patrol:
@@ -49,6 +57,8 @@ public class Nurse : Enemy
                 // lostKeyMask.SetActive(false);
                 // tickMask.SetActive(false);
                 // xMask.SetActive(false);
+                agent.speed = nursePatrolSpeed;
+                agent.angularSpeed = nursePatrolAngularSpeed;
                 Patrol();
                 break;
             case EnemyState.PatrolDetected:
@@ -58,6 +68,8 @@ public class Nurse : Enemy
                 // lostKeyMask.SetActive(false);
                 // tickMask.SetActive(false);
                 // xMask.SetActive(false);
+                agent.speed = nursePatrolSpeed;
+                agent.angularSpeed = nursePatrolAngularSpeed;
                 PatrolWhenDetected();
                 break;
             case EnemyState.PatrolElectric:
@@ -67,6 +79,8 @@ public class Nurse : Enemy
                 // lostKeyMask.SetActive(false);
                 // tickMask.SetActive(false);
                 // xMask.SetActive(false);
+                agent.speed = nurseElecSpeed;
+                agent.angularSpeed = nurseElecAngularSpeed;
                 PatrolWhenLostElectric();
                 break;
             case EnemyState.PatrolKey:
@@ -76,6 +90,8 @@ public class Nurse : Enemy
                 // lostEleMask.SetActive(false);
                 // tickMask.SetActive(false);
                 // xMask.SetActive(false);
+                agent.speed = nurseKeySpeed;
+                agent.angularSpeed = nurseKeyAngularSpeed;
                 PatrolWhenLostKey();
                 break;
             case EnemyState.Win:
@@ -117,7 +133,11 @@ public class Nurse : Enemy
 
     protected override void PatrolWhenLostElectric()
     {
-        throw new System.NotImplementedException();
+        agent.SetDestination(pos);
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            state = EnemyState.Idle;
+        }
     }
 
     protected override void PatrolWhenLostKey()
@@ -141,11 +161,10 @@ public class Nurse : Enemy
         pos = keyPos;
         state = EnemyState.PatrolKey;
     }
-
-    private void StateLostKey(Vector3 keyPos)
+    private void StateLostElectric(Vector3 Electpos)
     {
-        pos = keyPos;
-        state = EnemyState.PatrolKey;
+        pos = Electpos;
+        state = EnemyState.PatrolElectric;
     }
 
     public void HandleWhenDetected(List<RaycastHit> hitList)
@@ -165,5 +184,6 @@ public class Nurse : Enemy
         gameManager.onPlayerDetected.RemoveListener(StatePatrolDetected);
         gameManager.OnDetectedLostkey.RemoveListener(StatePatrolLostKey);
         playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
+        gameManager.OnElectricOff.RemoveListener(StateLostElectric);
     }
 }

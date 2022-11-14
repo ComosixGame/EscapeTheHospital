@@ -1,13 +1,12 @@
 using UnityEngine;
 using Cinemachine;
-
 public class Player : MonoBehaviour
 {
     public Scripables scriptablePlayer;
     public CinemachineFreeLook cmFL;
     public RectTransform joyStick;
     private GameObject _player;
-    
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -20,5 +19,6 @@ public class Player : MonoBehaviour
         cmFL.Follow = _playerSpawn.transform;
         cmFL.LookAt = _playerSpawn.transform;    
         _playerSpawn.GetComponent<PlayerController>().joystickRectTrans = joyStick;
+
     }
 }

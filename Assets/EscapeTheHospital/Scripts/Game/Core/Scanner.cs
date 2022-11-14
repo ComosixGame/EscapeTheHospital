@@ -12,13 +12,12 @@ using UnityEditor;
 #endif
 public class Scanner
 {
-    public LayerMask layerMaskTarget, ignoreObstacle, layerMaskSubTarget, layerZoombie, layerScanner;
+    public LayerMask layerMaskTarget, Obstacle, layerMaskSubTarget;
     public Material materialFieldOfView;
     private Mesh mesh;
     private MeshFilter meshFilterFOV;
     private float fov, ViewDistence;
     private Transform _detector;
-    private  bool isVisible = false;
     private List<RaycastHit> listHit = new List<RaycastHit>();
     public UnityEvent<List<RaycastHit>> OnDetectedTarget;
     public UnityEvent<Transform> OnDetectedSubTarget;
@@ -70,7 +69,7 @@ public class Scanner
             float rangeScan = ViewDistence;
             RaycastHit hit;
 
-            if(Physics.Raycast(origin, out hit, ViewDistence, ~ignoreObstacle)) {
+            if(Physics.Raycast(origin, out hit, ViewDistence, Obstacle)) {
                 vertex = Vector3.zero +  (dir * hit.distance);
                 rangeScan = hit.distance;
             }

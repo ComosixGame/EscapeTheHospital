@@ -9,10 +9,11 @@ public class Door : MonoBehaviour
     public LayerMask layer;
     public AudioClip audioClip;
     public Transform door;
+    public GameObject doorEffect;
+    [Range(0,1)] public float volumeScale;
     private AudioManager audioManager;
     private GameManager gameManager;
     private bool isTrigger, isOpend, isHasKey;
-    [Range(0,1)] public float volumeScale;
 
     private void Awake() 
     {
@@ -51,8 +52,8 @@ public class Door : MonoBehaviour
 
     private void DoorHasKey(Vector3 pos)
     {
-        Debug.Log("1234A");
         isHasKey = true;
+        doorEffect.SetActive(false);
     }
 
     private void OnDisable() 

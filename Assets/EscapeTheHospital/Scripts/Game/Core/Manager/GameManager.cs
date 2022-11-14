@@ -8,17 +8,16 @@ public class GameManager : Singleton<GameManager>
     private PlayerData _playerData;
     private bool _isWin, _isLose;
     public UnityEvent<int> onUpdateCoins = new UnityEvent<int>();
-    public UnityEvent onPlayerCatched = new UnityEvent();
-    public UnityEvent<Vector3> onPlayerDetected = new UnityEvent<Vector3>();
-    public UnityEvent<Vector3> OnDetectedLostkey = new UnityEvent<Vector3>();
-    public UnityEvent OnPlayerInvisible = new UnityEvent();
-
-    public UnityEvent onStart = new UnityEvent();
-    public UnityEvent onPause = new UnityEvent();
-    public UnityEvent onResume = new UnityEvent();
     public UnityEvent<int> onUpdateDoc = new UnityEvent<int>();
     public UnityEvent<bool> onEndGame = new UnityEvent<bool>();
     public UnityEvent<bool> onAdsCompelete = new UnityEvent<bool>();
+    public UnityEvent<Vector3> onPlayerDetected = new UnityEvent<Vector3>();
+    public UnityEvent<Vector3> OnDetectedLostkey = new UnityEvent<Vector3>();
+    public UnityEvent<Vector3> OnElectricOff = new UnityEvent<Vector3>();
+    public UnityEvent onStart = new UnityEvent();
+    public UnityEvent onResume = new UnityEvent();
+    public UnityEvent onPause = new UnityEvent();
+    public UnityEvent onPlayerCatched = new UnityEvent();
 
     protected override void Awake ()
     {
@@ -95,9 +94,9 @@ public class GameManager : Singleton<GameManager>
         OnDetectedLostkey?.Invoke(keyPos);
     }
 
-    public void PlayerInvisible()
+    public void ElectricOff(Vector3 electPos)
     {
-        OnPlayerInvisible?.Invoke();
+        OnElectricOff?.Invoke(electPos);
     }
 
     public void UpdateCurrency (int coins)
@@ -111,7 +110,5 @@ public class GameManager : Singleton<GameManager>
         if (_isLose) return;
         _playerData.currentDocs += docs;
         onUpdateDoc?.Invoke(_playerData.currentDocs);
-    }
-
-    
+    } 
 }
