@@ -169,7 +169,12 @@ public class Nurse : Enemy
 
     protected override void HandleWhenDetected(List<RaycastHit> hitList)
     {
-        pos = playerScanner.DetectSingleTarget(hitList).position;
+        pos.x = playerScanner.DetectSingleTarget(hitList).position.x;
+        pos.y = 10f;
+        pos.z = playerScanner.DetectSingleTarget(hitList).position.z;
+        effectLose.transform.position = pos;
+        effectLose.SetActive(true);
+        Debug.Log(effectLose.transform.position);
         GameManager.Instance.EndGame(false);
     }
 

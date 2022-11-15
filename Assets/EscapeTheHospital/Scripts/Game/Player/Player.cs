@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
     private GameObject _player;
     private GameObject player1;
     private GameObject _player2;
-
+    public GameObject poisonCloud;
+    public GameObject poison;
 
     private void OnEnable() 
     {
@@ -35,6 +36,10 @@ public class Player : MonoBehaviour
         player1.SetActive(false);
         _player2 = scriptablePlayer.scriptableObjects[1].obj;
         GameObject _playerSpawn = Instantiate(_player2,pos,Quaternion.identity);
+        poison.transform.position = pos;
+        poisonCloud.transform.position = pos;
+        poison.SetActive(true);
+        poisonCloud.SetActive(true);
         GameManager.Instance.OnZoombieDetected.RemoveListener(ChangeZoombie);
     }
 }

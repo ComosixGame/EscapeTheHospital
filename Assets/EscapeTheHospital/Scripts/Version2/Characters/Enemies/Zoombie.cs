@@ -8,8 +8,6 @@ public class Zoombie : Enemy
     public GameObject tickMask;
     public GameObject xMask;
     public GameObject doorPos;
-    public GameObject effectPoison;
-    public GameObject effectCloudPoison;
     private EnemyState state;
     private float nurseIdleSpeed = 5.5f;
     private float nurseIdleAngularSpeed = 120;
@@ -125,11 +123,6 @@ public class Zoombie : Enemy
         pos = playerScanner.DetectSingleTarget(hitList).position;
         base.HandleWhenDetected(hitList);
         effectLose.transform.position = pos;
-        Debug.Log(effectLose.transform.position);
-        // effectCloudPoison.transform.position = pos;
-        // effectPoison.transform.position = pos;
-        effectPoison.SetActive(true);
-        effectCloudPoison.SetActive(true);
         GameManager.Instance.ChangeZoombie(pos);
         // GameManager.Instance.EndGame(false);
     }

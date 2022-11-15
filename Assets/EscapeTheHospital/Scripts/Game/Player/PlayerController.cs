@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     private float _fallingVelocity;
     private GameManager _gameManager;
     private bool _isStart, _isPause;
- 
     public RectTransform joystickRectTrans;  
     public float gravity = -9.81f;
+    public GameObject winMark;
 
     private void Awake() 
     {
@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour
             _pAnimator.SetBool(_youLoseHash, true);
         }else if (isWin)
         {
+            winMark.SetActive(true);
             _pAnimator.SetBool(_youWonHash, true);
         }
         _isPause = true;
