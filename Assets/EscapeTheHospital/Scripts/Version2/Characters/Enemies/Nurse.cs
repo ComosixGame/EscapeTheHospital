@@ -167,7 +167,7 @@ public class Nurse : Enemy
         state = EnemyState.PatrolElectric;
     }
 
-    public void HandleWhenDetected(List<RaycastHit> hitList)
+    protected override void HandleWhenDetected(List<RaycastHit> hitList)
     {
         pos = playerScanner.DetectSingleTarget(hitList).position;
         GameManager.Instance.EndGame(false);

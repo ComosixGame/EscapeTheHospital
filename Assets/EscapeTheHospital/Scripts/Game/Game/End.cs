@@ -6,6 +6,7 @@ public class End : MonoBehaviour
 {
     public LayerMask layer;
     private GameManager gameManager;
+    public GameObject effectWin;
 
     private void Awake() {
         gameManager = GameManager.Instance;
@@ -14,6 +15,7 @@ public class End : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if((layer & (1 << other.gameObject.layer)) != 0) {
             gameManager.EndGame(true);
+            effectWin.SetActive(true);
         }
     }
 }

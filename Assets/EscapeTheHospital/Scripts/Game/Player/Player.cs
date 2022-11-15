@@ -6,6 +6,14 @@ public class Player : MonoBehaviour
     public CinemachineFreeLook cmFL;
     public RectTransform joyStick;
     private GameObject _player;
+    private GameObject player1;
+    private GameObject _player2;
+
+
+    private void OnEnable() 
+    {
+        GameManager.Instance.OnZoombieDetected.AddListener(ChangeZoombie);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +27,14 @@ public class Player : MonoBehaviour
         cmFL.Follow = _playerSpawn.transform;
         cmFL.LookAt = _playerSpawn.transform;    
         _playerSpawn.GetComponent<PlayerController>().joystickRectTrans = joyStick;
+        player1 = _playerSpawn;
+    }
 
+    private void ChangeZoombie(Vector3 pos)
+    {
+        player1.SetActive(false);
+        _player2 = scriptablePlayer.scriptableObjects[1].obj;
+        GameObject _playerSpawn = Instantiate(_player2,pos,Quaternion.identity);
+        GameManager.Instance.OnZoombieDetected.RemoveListener(ChangeZoombie);
     }
 }

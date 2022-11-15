@@ -32,6 +32,7 @@ public abstract class Enemy : MonoBehaviour
     public float           detectionAngle;
     public float           viewDistance;
     public EnemyTypePatrol typePatrol;
+    public GameObject      effectLose;
     [SerializeField] public Scanner playerScanner = new Scanner();
 
     protected virtual void Awake() 
@@ -146,11 +147,12 @@ public abstract class Enemy : MonoBehaviour
         return Quaternion.Lerp(transform.rotation, rotLook, speed*Time.deltaTime);
     }
 
-    // protected void HandleWhenDetected(List<RaycastHit> hitlist)
-    // {
-    //     pos = playerScanner.DetectSingleTarget(hitlist).position;
-    //     GameManager.Instance.EndGame(false);
-    // }
+    protected virtual void HandleWhenDetected(List<RaycastHit> hitlist)
+    {
+        // pos = playerScanner.DetectSingleTarget(hitlist).position;
+        // GameManager.Instance.EndGame(false);
+        effectLose.SetActive(true);
+    }
     protected virtual void OnEndGame(bool end)
     {
 

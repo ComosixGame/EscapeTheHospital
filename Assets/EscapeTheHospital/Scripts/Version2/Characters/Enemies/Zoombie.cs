@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Zoombie : Enemy
 {
@@ -119,11 +120,17 @@ public class Zoombie : Enemy
         state = EnemyState.PatrolElectric;
     }
 
-    public void HandleWhenDetected(List<RaycastHit> hitList)
+    protected override void HandleWhenDetected(List<RaycastHit> hitList)
     {
         pos = playerScanner.DetectSingleTarget(hitList).position;
+        base.HandleWhenDetected(hitList);
+        effectLose.transform.position = pos;
+        Debug.Log(effectLose.transform.position);
+        // effectCloudPoison.transform.position = pos;
+        // effectPoison.transform.position = pos;
         effectPoison.SetActive(true);
         effectCloudPoison.SetActive(true);
+        GameManager.Instance.ChangeZoombie(pos);
         // GameManager.Instance.EndGame(false);
     }
 

@@ -129,7 +129,7 @@ public class Doctor : Enemy
         state = EnemyState.PatrolElectric;
     }
 
-    protected void HandleWhenDetected(List<RaycastHit> hitlist)
+    protected override void HandleWhenDetected(List<RaycastHit> hitlist)
     {
         pos = playerScanner.DetectSingleTarget(hitlist).position;
         // GameManager.Instance.EndGame(false);
