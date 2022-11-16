@@ -12,7 +12,7 @@ using UnityEditor;
 #endif
 public class Scanner
 {
-    public LayerMask layerMaskTarget, Obstacle, layerMaskSubTarget, layerSelfEnemy;
+    public LayerMask layerMaskTarget, Obstacle, layerMaskSubTarget;
     public Material materialFieldOfView;
     private Mesh mesh;
     private MeshFilter meshFilterFOV;

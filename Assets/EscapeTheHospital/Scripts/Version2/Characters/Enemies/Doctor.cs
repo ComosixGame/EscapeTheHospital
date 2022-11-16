@@ -31,6 +31,10 @@ public class Doctor : Enemy
     {
         base.Update();
         //To do
+        if (!isStart)
+        {
+            return;
+        }
         StateManager();
     }
 
@@ -54,6 +58,7 @@ public class Doctor : Enemy
                 // xMask.SetActive(false);
                 agent.speed = doctorElecSpeed;
                 agent.angularSpeed = doctorElecAngularSpeed;
+                Patrol();
                 break;    
             case EnemyState.PatrolElectric:
                 // lostKeyMask.SetActive(false);
@@ -89,11 +94,13 @@ public class Doctor : Enemy
                 break;
         }
     }
-    protected override void OnStartGame()
-    {
-        base.OnStartGame();
 
+    protected override void Idle()
+    {
+        base.Idle();
+        state = EnemyState.Patrol;
     }
+
 
     protected override void PatrolWhenDetected()
     {

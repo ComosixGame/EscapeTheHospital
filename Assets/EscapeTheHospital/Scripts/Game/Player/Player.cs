@@ -4,16 +4,25 @@ public class Player : MonoBehaviour
 {
     public Scripables scriptablePlayer;
     public CinemachineFreeLook cmFL;
+    public GameObject poison;
+
     public RectTransform joyStick;
     private GameObject _player;
     private GameObject player1;
     private GameObject _player2;
     public GameObject poisonCloud;
-    public GameObject poison;
+
+    private GameManager gameManager;
+
+    private void Awake() 
+    {
+        gameManager = GameManager.Instance;
+    }
+
 
     private void OnEnable() 
     {
-        GameManager.Instance.OnZoombieDetected.AddListener(ChangeZoombie);
+        gameManager.OnZoombieDetected.AddListener(ChangeZoombie);
     }
 
     // Start is called before the first frame update
@@ -40,6 +49,6 @@ public class Player : MonoBehaviour
         poisonCloud.transform.position = pos;
         poison.SetActive(true);
         poisonCloud.SetActive(true);
-        GameManager.Instance.OnZoombieDetected.RemoveListener(ChangeZoombie);
+        gameManager.OnZoombieDetected.RemoveListener(ChangeZoombie);
     }
 }

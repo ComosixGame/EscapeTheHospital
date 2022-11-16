@@ -25,14 +25,18 @@ public class Nurse : Enemy
         gameManager.OnDetectedLostkey.AddListener(StatePatrolLostKey);
         playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
         gameManager.OnElectricOff.AddListener(StateLostElectric);
+        gameManager.onEndGame.AddListener(StateEndGame);
     }
 
     protected override void Update()
     {
         base.Update();
         //To do
+        if (!isStart)
+        {
+            return;
+        }
         StateManager();
-        playerScanner.Scan();
     }
 
     protected override void StateManager()
@@ -115,6 +119,7 @@ public class Nurse : Enemy
         }
     }
 
+
     protected override void Idle()
     {
         base.Idle();
@@ -174,8 +179,16 @@ public class Nurse : Enemy
         pos.z = playerScanner.DetectSingleTarget(hitList).position.z;
         effectLose.transform.position = pos;
         effectLose.SetActive(true);
-        Debug.Log(effectLose.transform.position);
         GameManager.Instance.EndGame(false);
+    }
+    private void StateEndGame(bool end)
+    {
+        if (end)
+        {
+            animator.SetTrigger(loseHash);
+        }
+        playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
+        agent.isStopped = true;
     }
 
     protected override void OnEndGame(bool end)
@@ -188,7 +201,7 @@ public class Nurse : Enemy
         base.OnDisable();
         gameManager.onPlayerDetected.RemoveListener(StatePatrolDetected);
         gameManager.OnDetectedLostkey.RemoveListener(StatePatrolLostKey);
-        playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
         gameManager.OnElectricOff.RemoveListener(StateLostElectric);
+        gameManager.onEndGame.RemoveListener(StateEndGame);
     }
 }

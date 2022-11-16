@@ -22,6 +22,7 @@ public abstract class Enemy : MonoBehaviour
     protected bool         isStart;
     protected bool         isEnd;
     protected GameObject   fieldOfView;
+    protected int          loseHash;
     
     protected Animator     animator;
     protected GameManager  gameManager;
@@ -40,6 +41,7 @@ public abstract class Enemy : MonoBehaviour
         agent        = GetComponent<NavMeshAgent>();
         animator     = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("Velocity");
+        loseHash     = Animator.StringToHash("Lose");
         gameManager  = GameManager.Instance;
     }
 
@@ -57,8 +59,12 @@ public abstract class Enemy : MonoBehaviour
 
     // Update is called once per frame
     protected virtual void Update()
-    {
-        playerScanner.Scan();
+    { 
+        playerScanner.Scan(); 
+        if (!isStart)
+        {
+            return;
+        }
         HandlAnimation();
     }
 
@@ -151,7 +157,7 @@ public abstract class Enemy : MonoBehaviour
     {
         // pos = playerScanner.DetectSingleTarget(hitlist).position;
         // GameManager.Instance.EndGame(false);
-        effectLose.SetActive(true);
+        // effectLose.SetActive(true);
     }
     protected virtual void OnEndGame(bool end)
     {
