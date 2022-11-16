@@ -12,7 +12,7 @@ using UnityEditor;
 #endif
 public class Scanner
 {
-    public LayerMask layerMaskTarget, Obstacle, layerMaskSubTarget;
+    public LayerMask layerMaskTarget, Obstacle, layerMaskSubTarget, layerSelfEnemy;
     public Material materialFieldOfView;
     private Mesh mesh;
     private MeshFilter meshFilterFOV;
@@ -137,10 +137,6 @@ public class Scanner
         int hitIndex = Array.IndexOf(distences, minDistence);
         return listRaycast[hitIndex].transform;
     }
-
-
-
-
 
 #if UNITY_EDITOR
     public void EditorGizmo(Transform transform, float angle, float radius) {

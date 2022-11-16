@@ -689,7 +689,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5173683242832549939}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.01
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -729,6 +729,9 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     layerMaskSubTarget:
+      serializedVersion: 2
+      m_Bits: 0
+    layerSelfEnemy:
       serializedVersion: 2
       m_Bits: 0
     materialFieldOfView: {fileID: 0}
