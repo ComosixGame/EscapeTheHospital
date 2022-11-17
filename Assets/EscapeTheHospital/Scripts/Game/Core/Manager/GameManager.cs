@@ -14,7 +14,6 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent<Vector3> onPlayerDetected = new UnityEvent<Vector3>();
     public UnityEvent<Vector3> OnDetectedLostkey = new UnityEvent<Vector3>();
     public UnityEvent<Vector3> OnElectricOff = new UnityEvent<Vector3>();
-    public UnityEvent<Vector3> OnZoombieDetected = new UnityEvent<Vector3>();
     public UnityEvent onStart = new UnityEvent();
     public UnityEvent onResume = new UnityEvent();
     public UnityEvent onPause = new UnityEvent();
@@ -98,11 +97,6 @@ public class GameManager : Singleton<GameManager>
     public void ElectricOff(Vector3 electPos)
     {
         OnElectricOff?.Invoke(electPos);
-    }
-
-    public void ChangeZoombie(Vector3 pos)
-    {
-        OnZoombieDetected?.Invoke(pos);
     }
 
     public void UpdateCurrency (int coins)

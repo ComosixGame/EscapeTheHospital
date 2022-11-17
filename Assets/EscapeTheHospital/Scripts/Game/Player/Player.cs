@@ -4,26 +4,9 @@ public class Player : MonoBehaviour
 {
     public Scripables scriptablePlayer;
     public CinemachineFreeLook cmFL;
-    public GameObject poison;
-
     public RectTransform joyStick;
     private GameObject _player;
-    private GameObject player1;
-    private GameObject _player2;
-    public GameObject poisonCloud;
-
-    private GameManager gameManager;
-
-    private void Awake() 
-    {
-        gameManager = GameManager.Instance;
-    }
-
-
-    private void OnEnable() 
-    {
-        gameManager.OnZoombieDetected.AddListener(ChangeZoombie);
-    }
+    private Transform playerTransform;
 
     // Start is called before the first frame update
     void Start()
@@ -34,21 +17,10 @@ public class Player : MonoBehaviour
         //Do Something
         Vector3 positionPlayer = transform.position;
         GameObject _playerSpawn = Instantiate(_player,positionPlayer,Quaternion.identity);
-        cmFL.Follow = _playerSpawn.transform;
-        cmFL.LookAt = _playerSpawn.transform;    
+        playerTransform = _playerSpawn.transform;
+        cmFL.Follow = playerTransform;
+        cmFL.LookAt = playerTransform;    
         _playerSpawn.GetComponent<PlayerController>().joystickRectTrans = joyStick;
-        player1 = _playerSpawn;
     }
 
-    private void ChangeZoombie(Vector3 pos)
-    {
-        player1.SetActive(false);
-        _player2 = scriptablePlayer.scriptableObjects[1].obj;
-        GameObject _playerSpawn = Instantiate(_player2,pos,Quaternion.identity);
-        poison.transform.position = pos;
-        poisonCloud.transform.position = pos;
-        poison.SetActive(true);
-        poisonCloud.SetActive(true);
-        gameManager.OnZoombieDetected.RemoveListener(ChangeZoombie);
-    }
 }

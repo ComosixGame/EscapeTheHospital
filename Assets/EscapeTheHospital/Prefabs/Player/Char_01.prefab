@@ -521,7 +521,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1.65, z: 0}
 --- !u!114 &3204823885722637427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,6 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6db355ac70d6cb45b9bc0adc18415af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerKey: {fileID: 6806767597074980848}
   _speed: 10
   joystickRectTrans: {fileID: 0}
   gravity: -9.81
@@ -561,8 +562,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2557150429932972891}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.00000018457024, y: -0.0000003553501, z: 0.00001943261, w: 1}
+  m_LocalPosition: {x: -0.0000039691295, y: 1.4534743, z: 0.00041955322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private int _velocityHash;
     private int _youWonHash;
     private int _youLoseHash;
+    public GameObject playerKey;
     [SerializeField] private float _speed = 10f;
     private Vector3 _dirMove;
     private CharacterController _cController;
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
         _gameManager.onPause.AddListener(OnPauseGame);
         _gameManager.onResume.AddListener(OnResumeGame);
         _gameManager.onEndGame.AddListener(OnEndGame);
+        _gameManager.OnDetectedLostkey.AddListener(AnimationHasKey);
     }
 
     private void Update() 
@@ -145,6 +147,10 @@ public class PlayerController : MonoBehaviour
         _isPause = true;
     }
 
+    private void AnimationHasKey(Vector3 pos)
+    {
+        playerKey.SetActive(true);
+    }
 
 
     private void OnDisable()
@@ -158,5 +164,6 @@ public class PlayerController : MonoBehaviour
         _gameManager.onPause.RemoveListener(OnPauseGame);
         _gameManager.onResume.RemoveListener(OnResumeGame);
         _gameManager.onEndGame.RemoveListener(OnEndGame);
+        _gameManager.OnDetectedLostkey.RemoveListener(AnimationHasKey);
     }
 }

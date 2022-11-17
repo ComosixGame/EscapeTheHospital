@@ -23,6 +23,8 @@ public abstract class Enemy : MonoBehaviour
     protected bool         isEnd;
     protected GameObject   fieldOfView;
     protected int          loseHash;
+    protected int          winHash;
+
     
     protected Animator     animator;
     protected GameManager  gameManager;
@@ -42,6 +44,7 @@ public abstract class Enemy : MonoBehaviour
         animator     = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("Velocity");
         loseHash     = Animator.StringToHash("Lose");
+        winHash      = Animator.StringToHash("Win");
         gameManager  = GameManager.Instance;
     }
 
@@ -161,7 +164,8 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void OnEndGame(bool end)
     {
-
+        agent.isStopped = true;
+        playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
     }
 
     protected virtual void OnDisable() 

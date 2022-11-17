@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Zoombie : Enemy
 {
@@ -8,6 +7,9 @@ public class Zoombie : Enemy
     public GameObject tickMask;
     public GameObject xMask;
     public GameObject doorPos;
+    public GameObject poisonCloud;
+    public GameObject poison;
+    public Scripables scriptablePlayer;
     private EnemyState state;
     private float nurseIdleSpeed = 5.5f;
     private float nurseIdleAngularSpeed = 120;
@@ -31,6 +33,10 @@ public class Zoombie : Enemy
     {
         base.Update();
         //To do
+        if (!isStart)
+        {
+            return;
+        }
         StateManager();
     }
 
@@ -78,6 +84,12 @@ public class Zoombie : Enemy
         }
     }
 
+    protected override void Idle()
+    {
+        base.Idle();
+        state = EnemyState.Patrol;
+    }
+
     protected override void PatrolWhenDetected()
     {
         //Nothing
@@ -120,15 +132,27 @@ public class Zoombie : Enemy
 
     protected override void HandleWhenDetected(List<RaycastHit> hitList)
     {
-        pos = playerScanner.DetectSingleTarget(hitList).position;
         base.HandleWhenDetected(hitList);
-        effectLose.transform.position = pos;
-        GameManager.Instance.ChangeZoombie(pos);
-        // GameManager.Instance.EndGame(false);
+        pos = playerScanner.DetectSingleTarget(hitList).position;
+        playerScanner.DetectSingleTarget(hitList).transform.gameObject.SetActive(false);
+        GameObject player =  scriptablePlayer.scriptableObjects[1].obj;
+        Instantiate(player, playerScanner.DetectSingleTarget(hitList).transform.position, playerScanner.DetectSingleTarget(hitList).rotation);
+        poison.transform.position = pos;
+        poisonCloud.transform.position = pos;
+        poison.SetActive(true);
+        poisonCloud.SetActive(true);
+        GameManager.Instance.EndGame(false);
     }
 
     protected override void OnEndGame(bool end)
     {
+        if (end)
+        {
+            animator.SetTrigger(loseHash);
+        }else
+        {
+            animator.SetTrigger(winHash);
+        }
         base.OnEndGame(end);
     }
 
