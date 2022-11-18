@@ -139,12 +139,19 @@ public class Doctor : Enemy
     protected override void HandleWhenDetected(List<RaycastHit> hitlist)
     {
         pos = playerScanner.DetectSingleTarget(hitlist).position;
-        // GameManager.Instance.EndGame(false);
+        GameManager.Instance.EndGame(false);
     }
 
     protected override void OnEndGame(bool end)
     {
         base.OnEndGame(end);
+        if (end)
+        {
+            animator.SetTrigger(loseHash);
+        }else
+        {
+            animator.SetTrigger(winHash);
+        }
     }
 
     
