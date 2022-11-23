@@ -28,7 +28,7 @@ namespace Unity.Services.Mediation.Samples
             try
             {
                 Debug.Log("Initializing...");
-                await UnityServices.InitializeAsync(GetGameId());
+                await UnityServices.InitializeAsync();
                 Debug.Log("Initialized!");
 
                 InitializationComplete();
