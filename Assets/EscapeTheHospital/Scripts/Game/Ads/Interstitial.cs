@@ -4,67 +4,39 @@ using Unity.Services.Core;
 using Unity.Services.Mediation;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
       
-
     public class Interstitial : MonoBehaviour
     {
-
-        public Text text;
+        public GameObject btnPlayAgain;
+        public GameObject iconLoading;
         public UnityEvent OnAdsDone = new UnityEvent();
-        public UnityEvent OnLoadAdsDone = new UnityEvent();
+
        [Header("Ad Unit Ids"), Tooltip("Android Ad Unit Ids")]
         public string androidAdUnitId;
 
         [Tooltip("iOS Ad Unit Ids")]
         public string iosAdUnitId;
-
-        [Header("Game Ids"),
-         Tooltip("[Optional] Specifies the iOS GameId. Otherwise uses the GameId of the linked project.")]
-        public string iosGameId;
-
-        [Tooltip("[Optional] Specifies the Android GameId. Otherwise uses the GameId of the linked project.")]
-        public string androidGameId;
-
         IInterstitialAd m_InterstitialAd;
 
         async void Start()
         {
+            iconLoading.SetActive(true);
             try
             {
-                Debug.Log("Initializing...");
-                await UnityServices.InitializeAsync(GetGameId());
-                Debug.Log("Initialized!");
+                await UnityServices.InitializeAsync();
 
                 InitializationComplete();
             }
             catch (Exception e)
             {
                 InitializationFailed(e);
+                OnAdsDone?.Invoke();
             }
         }
 
         void OnDestroy()
         {
             m_InterstitialAd?.Dispose();
-        }
-        
-        InitializationOptions GetGameId()
-        {
-            var initializationOptions = new InitializationOptions();
-
-#if UNITY_IOS
-            if (!string.IsNullOrEmpty(iosGameId))
-            {
-                initializationOptions.SetGameId(iosGameId);
-            }
-#elif UNITY_ANDROID
-            if (!string.IsNullOrEmpty(androidGameId))
-            {
-                initializationOptions.SetGameId(androidGameId);
-            }
-#endif
-            return initializationOptions;
         }
 
         public async void ShowInterstitial()
@@ -75,27 +47,26 @@ using UnityEngine.UI;
                 {
                     var showOptions = new InterstitialAdShowOptions { AutoReload = true };
                     await m_InterstitialAd.ShowAsync(showOptions);
-                    Debug.Log("Interstitial Shown!");
                 }
                 catch (ShowFailedException e)
                 {
-                    Debug.Log($"Interstitial failed to show : {e.Message}");
+                    OnAdsDone?.Invoke();
                 }
             }
         }
 
         async void LoadAd()
         {
+            iconLoading.SetActive(true);
+            btnPlayAgain.SetActive(false);
             try
             {
                 await m_InterstitialAd.LoadAsync();
             }
             catch (LoadFailedException)
             {
-                // We will handle the failure in the OnFailedLoad callback
-                // text.text = "ABC";
+
             }
-            OnLoadAdsDone?.Invoke();
         }
 
         void InitializationComplete()
@@ -140,8 +111,7 @@ using UnityEngine.UI;
             {
                 initializationError = initializeFailedException.initializationError;
             }
-            text.text = error.Message;
-            Debug.Log($"Initialization Failed: {initializationError}:{error.Message}");
+            OnAdsDone?.Invoke();
         }
 
         void AdClosed(object sender, EventArgs args)
@@ -152,14 +122,14 @@ using UnityEngine.UI;
 
         void AdLoaded(object sender, EventArgs e)
         {
-            Debug.Log("Ad loaded");
+            btnPlayAgain.SetActive(true);
+            iconLoading.SetActive(false);
         }
 
         void AdFailedLoad(object sender, LoadErrorEventArgs e)
         {
-            Debug.Log("Failed to load ad");
-            Debug.Log(e.Message);
-            // text.text = e.Message;
+            iconLoading.SetActive(false);
+            btnPlayAgain.SetActive(true);
         }
 
         void ImpressionEvent(object sender, ImpressionEventArgs args)

@@ -33,7 +33,6 @@ public class UIManager : MonoBehaviour
     public void StartGame()
     {
         _gameManager.StartGame();
-        Debug.Log(123);
     }
 
     public void PauseGame()
