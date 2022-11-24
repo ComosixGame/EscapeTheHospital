@@ -138,7 +138,12 @@ public class Doctor : Enemy
 
     protected override void HandleWhenDetected(List<RaycastHit> hitlist)
     {
-        pos = playerScanner.DetectSingleTarget(hitlist).position;
+        pos.x = playerScanner.DetectSingleTarget(hitlist).position.x;
+        pos.y = 10f;
+        pos.z = playerScanner.DetectSingleTarget(hitlist).position.z;
+        effectLose.transform.position = pos;
+        // pos = playerScanner.DetectSingleTarget(hitlist).position;
+        effectLose.SetActive(true);
         GameManager.Instance.EndGame(false);
     }
 

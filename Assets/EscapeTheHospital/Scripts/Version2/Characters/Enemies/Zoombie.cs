@@ -25,7 +25,7 @@ public class Zoombie : Enemy
         base.OnEnable();
         gameManager.OnDetectedLostkey.AddListener(StatePatrolLostKey);
         gameManager.OnElectricOff.AddListener(StateLostElectric);
-        gameManager.onPlayerDetected.AddListener(StatePatrolDetected);
+        // gameManager.onPlayerDetected.AddListener(StatePatrolDetected);
         playerScanner.OnDetectedTarget.AddListener(HandleWhenDetected);
     }
 
@@ -56,11 +56,11 @@ public class Zoombie : Enemy
                 agent.angularSpeed = nursePatrolAngularSpeed;
                 Patrol();
                 break;
-            case EnemyState.PatrolDetected:
-                agent.speed = nursePatrolSpeed;
-                agent.angularSpeed = nursePatrolAngularSpeed;
-                PatrolWhenDetected();
-                break;
+            // case EnemyState.PatrolDetected:
+            //     agent.speed = nursePatrolSpeed;
+            //     agent.angularSpeed = nursePatrolAngularSpeed;
+            //     PatrolWhenDetected();
+            //     break;
             case EnemyState.PatrolElectric:
                 agent.speed = nurseElecSpeed;
                 agent.angularSpeed = nurseElecAngularSpeed;
@@ -113,7 +113,7 @@ public class Zoombie : Enemy
         }
     }
 
-     private void StatePatrolDetected(Vector3 playerDetectedPos)
+    private void StatePatrolDetected(Vector3 playerDetectedPos)
     {
         pos = playerDetectedPos;
         state = EnemyState.PatrolDetected;
@@ -159,7 +159,7 @@ public class Zoombie : Enemy
     protected override void OnDisable()
     {
         base.OnDisable();
-        gameManager.onPlayerDetected.RemoveListener(StatePatrolDetected);
+        // gameManager.onPlayerDetected.RemoveListener(StatePatrolDetected);
         gameManager.OnDetectedLostkey.RemoveListener(StatePatrolLostKey);
         playerScanner.OnDetectedTarget.RemoveListener(HandleWhenDetected);
         gameManager.OnElectricOff.RemoveListener(StateLostElectric);

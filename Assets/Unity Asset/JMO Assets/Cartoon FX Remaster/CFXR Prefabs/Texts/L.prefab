@@ -51,7 +51,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -5015,6 +5015,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: S
       objectReference: {fileID: 0}
+    - target: {fileID: 7646863677936816410, guid: 9ceadfda0b84fa04985aff9c46cb5e0d,
+        type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ceadfda0b84fa04985aff9c46cb5e0d, type: 3}
 --- !u!4 &6492994945150608509 stripped
@@ -5030,6 +5035,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2727237550608894924}
     m_Modifications:
+    - target: {fileID: 3230865853237765680, guid: 5684fecfdff925d48bdf7c2e39eacd4d,
+        type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3230865853237765680, guid: 5684fecfdff925d48bdf7c2e39eacd4d,
         type: 3}
       propertyPath: CustomDataModule.color0.maxColor.b
@@ -5149,6 +5159,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: E
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194467366908190874, guid: 8e5f12e01b9458e468b7be5bbdb45a93,
+        type: 3}
+      propertyPath: looping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7194467366908190874, guid: 8e5f12e01b9458e468b7be5bbdb45a93,
         type: 3}
