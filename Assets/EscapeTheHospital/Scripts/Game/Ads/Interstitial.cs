@@ -10,6 +10,7 @@ using System.Collections;
     public class Interstitial : MonoBehaviour
     {
         public GameObject btnPlayAgain;
+        public GameObject pannelLoading;
         public UnityEvent OnAdsDone = new UnityEvent();
         private bool flag;
 
@@ -64,6 +65,7 @@ using System.Collections;
         async void LoadAd()
         {
             btnPlayAgain.SetActive(false);
+            pannelLoading.SetActive(true);
             try
             {
                 await m_InterstitialAd.LoadAsync();
@@ -127,6 +129,7 @@ using System.Collections;
         void AdLoaded(object sender, EventArgs e)
         {
             btnPlayAgain.SetActive(true);
+            pannelLoading.SetActive(false);
         }
 
         void AdFailedLoad(object sender, LoadErrorEventArgs e)
@@ -146,6 +149,7 @@ using System.Collections;
         yield return www;
         if (www.error != null) {
             btnPlayAgain.SetActive(true);
+            pannelLoading.SetActive(false);
             flag = true;
         } else {
             action (true);
