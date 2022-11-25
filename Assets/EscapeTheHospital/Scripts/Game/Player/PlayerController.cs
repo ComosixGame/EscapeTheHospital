@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
         _dirMove = new Vector3(dir.x, 0, dir.y);
     }
 
-       private void ShowJoystick(InputAction.CallbackContext ctx) {
+    private void ShowJoystick(InputAction.CallbackContext ctx) {
         if(!_isPause && _isStart) {
             joystickRectTrans.position = ctx.ReadValue<Vector2>();
         }
@@ -151,7 +151,6 @@ public class PlayerController : MonoBehaviour
     {
         playerKey.SetActive(true);
     }
-
 
     private void OnDisable()
     {

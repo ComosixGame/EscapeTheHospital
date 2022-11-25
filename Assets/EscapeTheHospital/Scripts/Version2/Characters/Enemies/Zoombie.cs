@@ -95,7 +95,7 @@ public class Zoombie : Enemy
         //Nothing
     }
 
-   protected override void PatrolWhenLostElectric()
+    protected override void PatrolWhenLostElectric()
     {
         agent.SetDestination(pos);
         if (agent.remainingDistance <= agent.stoppingDistance)
@@ -107,9 +107,10 @@ public class Zoombie : Enemy
     protected override void PatrolWhenLostKey()
     {
         agent.SetDestination(pos);
+
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            state = EnemyState.Idle;
+            state = EnemyState.Patrol;
         }
     }
 
@@ -141,6 +142,11 @@ public class Zoombie : Enemy
         poisonCloud.transform.position = pos;
         poison.SetActive(true);
         poisonCloud.SetActive(true);
+        pos.x = playerScanner.DetectSingleTarget(hitList).position.x;
+        pos.y = 10f;
+        pos.z = playerScanner.DetectSingleTarget(hitList).position.z;
+        effectLose.transform.position = pos;
+        effectLose.SetActive(true);
         GameManager.Instance.EndGame(false);
     }
 

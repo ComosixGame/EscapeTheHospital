@@ -7,8 +7,6 @@ public class Key : MonoBehaviour
     public  LayerMask layer;
     public  GameObject key;
     public  AudioClip audioClip;
-    public  GameObject effectWow;
-    public  GameObject effectHit;
 
     [Range(0,1)] public float volumeScale;
 
@@ -24,8 +22,6 @@ public class Key : MonoBehaviour
             audioManager.PlayOneShot(audioClip, volumeScale);
             items.DectectedLostKey(key.transform.position);
             key.SetActive(false);
-            effectWow.SetActive(true);
-            effectHit.SetActive(false);
         }
     }
 }

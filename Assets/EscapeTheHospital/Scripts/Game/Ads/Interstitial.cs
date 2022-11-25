@@ -4,12 +4,14 @@ using Unity.Services.Core;
 using Unity.Services.Mediation;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Net;
+using System.Collections;
       
     public class Interstitial : MonoBehaviour
     {
         public GameObject btnPlayAgain;
-        public GameObject iconLoading;
         public UnityEvent OnAdsDone = new UnityEvent();
+        private bool flag;
 
        [Header("Ad Unit Ids"), Tooltip("Android Ad Unit Ids")]
         public string androidAdUnitId;
@@ -20,7 +22,6 @@ using UnityEngine.Events;
 
         async void Start()
         {
-            iconLoading.SetActive(true);
             try
             {
                 await UnityServices.InitializeAsync();
@@ -30,8 +31,11 @@ using UnityEngine.Events;
             catch (Exception e)
             {
                 InitializationFailed(e);
-                OnAdsDone?.Invoke();
             }
+
+            StartCoroutine(checkInternetConnection((isConnected)=>{
+                // OnAdsDone?.Invoke();
+            }));
         }
 
         void OnDestroy()
@@ -50,14 +54,15 @@ using UnityEngine.Events;
                 }
                 catch (ShowFailedException e)
                 {
-                    OnAdsDone?.Invoke();
                 }
             }
+            if (flag)
+               OnAdsDone?.Invoke(); 
+
         }
 
         async void LoadAd()
         {
-            iconLoading.SetActive(true);
             btnPlayAgain.SetActive(false);
             try
             {
@@ -111,7 +116,6 @@ using UnityEngine.Events;
             {
                 initializationError = initializeFailedException.initializationError;
             }
-            OnAdsDone?.Invoke();
         }
 
         void AdClosed(object sender, EventArgs args)
@@ -123,12 +127,10 @@ using UnityEngine.Events;
         void AdLoaded(object sender, EventArgs e)
         {
             btnPlayAgain.SetActive(true);
-            iconLoading.SetActive(false);
         }
 
         void AdFailedLoad(object sender, LoadErrorEventArgs e)
         {
-            iconLoading.SetActive(false);
             btnPlayAgain.SetActive(true);
         }
 
@@ -137,4 +139,16 @@ using UnityEngine.Events;
             var impressionData = args.ImpressionData != null ? JsonUtility.ToJson(args.ImpressionData, true) : "null";
             Debug.Log($"Impression event from ad unit id {args.AdUnitId} : {impressionData}");
         }
+
+    private IEnumerator  checkInternetConnection(Action<bool> action)
+    {
+        WWW www = new WWW("http://google.com");
+        yield return www;
+        if (www.error != null) {
+            btnPlayAgain.SetActive(true);
+            flag = true;
+        } else {
+            action (true);
+        }
     }
+}
