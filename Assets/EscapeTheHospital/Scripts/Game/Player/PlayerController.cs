@@ -119,6 +119,11 @@ public class PlayerController : MonoBehaviour
         joystickRectTrans.position = new Vector2(9999999, 9999999);
     }
 
+    public void HideJoystickZoombie()
+    {
+        joystickRectTrans.position = new Vector2(9999999, 9999999);
+    }
+
     private void OnStartGame()
     {
         _isStart = true;

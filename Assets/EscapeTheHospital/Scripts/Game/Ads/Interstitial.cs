@@ -135,6 +135,8 @@ using System.Collections;
         void AdFailedLoad(object sender, LoadErrorEventArgs e)
         {
             btnPlayAgain.SetActive(true);
+            //26-11-2022
+            pannelLoading.SetActive(false);
         }
 
         void ImpressionEvent(object sender, ImpressionEventArgs args)

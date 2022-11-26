@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class Zoombie : Enemy
 {
-    public GameObject eye;
-    public GameObject tickMask;
-    public GameObject xMask;
-    public GameObject doorPos;
+    // public GameObject eye;
+    // public GameObject tickMask;
+    // public GameObject xMask;
+    // public GameObject doorPos;
     public GameObject poisonCloud;
     public GameObject poison;
     public Scripables scriptablePlayer;
+    public PlayerController playerController;
     private EnemyState state;
     private float nurseIdleSpeed = 5.5f;
     private float nurseIdleAngularSpeed = 120;
@@ -127,7 +128,7 @@ public class Zoombie : Enemy
     }
     private void StateLostElectric(Vector3 Electpos)
     {
-        pos = doorPos.transform.position;
+        // pos = doorPos.transform.position;
         state = EnemyState.PatrolElectric;
     }
 
@@ -148,6 +149,7 @@ public class Zoombie : Enemy
         effectLose.transform.position = pos;
         effectLose.SetActive(true);
         GameManager.Instance.EndGame(false);
+        playerController.HideJoystickZoombie();
     }
 
     protected override void OnEndGame(bool end)
