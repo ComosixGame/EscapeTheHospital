@@ -10,14 +10,13 @@ public class Zoombie : Enemy
     public GameObject poisonCloud;
     public GameObject poison;
     public Scripables scriptablePlayer;
-    public PlayerController playerController;
     private EnemyState state;
-    private float nurseIdleSpeed = 5.5f;
-    private float nurseIdleAngularSpeed = 120;
-    private float nursePatrolSpeed = 6f;
-    private float nursePatrolAngularSpeed = 140;
-    private float nurseKeySpeed = 7f;
-    private float nurseKeyAngularSpeed = 150;
+    private float nurseIdleSpeed = 2;
+    private float nurseIdleAngularSpeed = 60;
+    private float nursePatrolSpeed = 2.5f;
+    private float nursePatrolAngularSpeed = 80;
+    private float nurseKeySpeed = 3f;
+    private float nurseKeyAngularSpeed = 100;
     private float nurseElecSpeed = 4f;
     private float nurseElecAngularSpeed = 100;
 
@@ -149,7 +148,6 @@ public class Zoombie : Enemy
         effectLose.transform.position = pos;
         effectLose.SetActive(true);
         GameManager.Instance.EndGame(false);
-        playerController.HideJoystickZoombie();
     }
 
     protected override void OnEndGame(bool end)
