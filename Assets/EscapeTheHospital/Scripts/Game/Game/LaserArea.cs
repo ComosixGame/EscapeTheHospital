@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LaserArea : MonoBehaviour
 {
-    // public GameObject laserArea;
     public GameObject laserGO;
     public LayerMask layer;
     private AudioManager _audioManager;
@@ -20,7 +19,6 @@ public class LaserArea : MonoBehaviour
         {
             _audioManager.PlayOneShot(audioClip, volumeScale);
             laserGO.SetActive(false);
-            // laserArea.SetActive(false);
         }
     }
     

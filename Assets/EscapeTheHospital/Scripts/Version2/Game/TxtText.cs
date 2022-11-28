@@ -8,12 +8,7 @@ public class TxtText : MonoBehaviour
     {
         if ((layer & (1 << other.gameObject.layer)) != 0)
         {
-            GetComponentInChildren<TextMeshPro>().fontSize = 20;
+            GetComponentInChildren<TextMeshPro>().fontSize = 15;
         }
-    }
-
-    private void OnTriggerExit(Collider other) 
-    {
-        GetComponentInChildren<TextMeshPro>().fontSize = 0;
     }
 }

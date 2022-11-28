@@ -10,6 +10,7 @@ public class Door : MonoBehaviour
     public AudioClip audioClip;
     public Transform door;
     public GameObject doorEffect;
+
     [Range(0,1)] public float volumeScale;
     private AudioManager audioManager;
     private GameManager gameManager;
@@ -19,6 +20,7 @@ public class Door : MonoBehaviour
     {
         audioManager = AudioManager.Instance;
         gameManager = GameManager.Instance;
+        
     }
 
     private void OnEnable() 

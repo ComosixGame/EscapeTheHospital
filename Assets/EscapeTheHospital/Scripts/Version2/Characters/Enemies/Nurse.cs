@@ -10,13 +10,13 @@ public class Nurse : Enemy
     public GameObject tickMask;
     public GameObject xMask;
     private EnemyState state;
-    private float nurseIdleSpeed = 5.5f;
+    private float nurseIdleSpeed = 3.5f;
     private float nurseIdleAngularSpeed = 120;
-    private float nursePatrolSpeed = 6f;
+    private float nursePatrolSpeed = 4.5f;
     private float nursePatrolAngularSpeed = 140;
-    private float nurseKeySpeed = 7f;
+    private float nurseKeySpeed = 5f;
     private float nurseKeyAngularSpeed = 150;
-    private float nurseElecSpeed = 4f;
+    private float nurseElecSpeed = 2f;
     private float nurseElecAngularSpeed = 100;
     protected override void OnEnable()
     {

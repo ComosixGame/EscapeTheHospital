@@ -58,13 +58,11 @@ using System.Collections;
                 }
             }
             if (flag)
-               OnAdsDone?.Invoke(); 
-
+               OnAdsDone?.Invoke();
         }
 
         async void LoadAd()
         {
-            btnPlayAgain.SetActive(false);
             pannelLoading.SetActive(true);
             try
             {
@@ -72,7 +70,8 @@ using System.Collections;
             }
             catch (LoadFailedException)
             {
-
+                pannelLoading.SetActive(false);
+                flag = true;
             }
         }
 
@@ -135,8 +134,6 @@ using System.Collections;
         void AdFailedLoad(object sender, LoadErrorEventArgs e)
         {
             btnPlayAgain.SetActive(true);
-            //26-11-2022
-            pannelLoading.SetActive(false);
         }
 
         void ImpressionEvent(object sender, ImpressionEventArgs args)
@@ -151,7 +148,6 @@ using System.Collections;
         yield return www;
         if (www.error != null) {
             btnPlayAgain.SetActive(true);
-            pannelLoading.SetActive(false);
             flag = true;
         } else {
             action (true);
