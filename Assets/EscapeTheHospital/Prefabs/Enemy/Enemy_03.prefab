@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &197044479278378947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6168049107283834987}
+  m_Layer: 11
+  m_Name: hit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6168049107283834987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197044479278378947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4773925956426978567}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438537058208047012
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,6 +877,7 @@ Transform:
   - {fileID: 2592159643428934305}
   - {fileID: 1013369914890040723}
   - {fileID: 1520179561176015674}
+  - {fileID: 6168049107283834987}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -905,7 +937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   standPos: {x: 0, y: 0, z: 0}
   patrolList: []
-  rootScanner: {fileID: 1013369914890040723}
+  rootScanner: {fileID: 6168049107283834987}
   detectionAngle: 0
   viewDistance: 0
   typePatrol: 0
@@ -931,10 +963,6 @@ MonoBehaviour:
     OnNotDetectedTarget:
       m_PersistentCalls:
         m_Calls: []
-  eye: {fileID: 0}
-  tickMask: {fileID: 0}
-  xMask: {fileID: 0}
-  doorPos: {fileID: 0}
   poisonCloud: {fileID: 0}
   poison: {fileID: 0}
   scriptablePlayer: {fileID: 0}

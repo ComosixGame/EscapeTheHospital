@@ -15,7 +15,7 @@ public class Zoombie : Enemy
     private float nurseIdleAngularSpeed = 60;
     private float nursePatrolSpeed = 2.5f;
     private float nursePatrolAngularSpeed = 80;
-    private float nurseKeySpeed = 3f;
+    private float nurseKeySpeed = 4.5f;
     private float nurseKeyAngularSpeed = 100;
     private float nurseElecSpeed = 4f;
     private float nurseElecAngularSpeed = 100;
