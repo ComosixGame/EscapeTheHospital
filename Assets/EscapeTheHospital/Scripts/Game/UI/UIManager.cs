@@ -6,10 +6,11 @@ public class UIManager : MonoBehaviour
 {
     private GameManager _gameManager;
     private AudioManager _audioManager;
-    public GameObject header,pauseMenu, loseMenu, winMenu;
     private int _OpenMenuHash;
     private int _CloseMenuHash;
     private Animator _animator;
+    public GameObject header,pauseMenu, loseMenu, winMenu;
+    public GameObject joy;
 
     public float volumeScale;
 
@@ -64,5 +65,6 @@ public class UIManager : MonoBehaviour
         {
             loseMenu.SetActive(true);
         }
+        joy.gameObject.transform.localScale = new Vector3 (0,0,0);
     }
 }

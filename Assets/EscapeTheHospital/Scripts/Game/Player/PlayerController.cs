@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
@@ -20,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private float _fallingVelocity;
     private GameManager _gameManager;
     private bool _isStart, _isPause;
+    private InputAction.CallbackContext ctx;
     public RectTransform joystickRectTrans;  
     public float gravity = -9.81f;
     public GameObject winMark;
@@ -116,11 +116,6 @@ public class PlayerController : MonoBehaviour
 
     private void HideJoystick(InputAction.CallbackContext ctx) {
         //hide joystick out of UI view
-        joystickRectTrans.position = new Vector2(9999999, 9999999);
-    }
-
-    public void HideJoystickZoombie()
-    {
         joystickRectTrans.position = new Vector2(9999999, 9999999);
     }
 
