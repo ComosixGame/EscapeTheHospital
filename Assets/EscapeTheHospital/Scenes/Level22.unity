@@ -3768,7 +3768,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444796114}
-  m_LocalRotation: {x: 0.51800394, y: -0.00000006771957, z: 0.000000041009933, w: 0.85537827}
+  m_LocalRotation: {x: 0.518004, y: 0.000000014121571, z: -0.0000000085518135, w: 0.85537827}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6365,7 +6365,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751080552}
-  m_LocalRotation: {x: 0.518004, y: -0.000000068908676, z: 0.00000004173004, w: 0.85537827}
+  m_LocalRotation: {x: 0.51800406, y: 0.00000004807752, z: -0.000000029115018, w: 0.8553782}
   m_LocalPosition: {x: 22.8, y: 19.15, z: -28.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15683,6 +15683,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ShowInterstitial
       objectReference: {fileID: 0}
+    - target: {fileID: 9211094274387074640, guid: 46c640fccaef6244e96573205cb39f0c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2012760230}
+    - target: {fileID: 9211094274387074640, guid: 46c640fccaef6244e96573205cb39f0c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadNextLevel
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46c640fccaef6244e96573205cb39f0c, type: 3}
 --- !u!1001 &1881451703
@@ -17221,7 +17231,7 @@ MonoBehaviour:
   loadingScreen: {fileID: 56883764}
   loadingBar: {fileID: 1865519431}
   loadOnAwake: 0
-  nextLevel: 9
+  nextLevel: 24
 --- !u!1001 &2017504922
 PrefabInstance:
   m_ObjectHideFlags: 0

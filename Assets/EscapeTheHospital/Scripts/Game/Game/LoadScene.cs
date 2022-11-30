@@ -47,7 +47,7 @@ public class LoadScene : MonoBehaviour
     {
         int LatestLevel = PlayerData.LoadData().LatestLevel;
         Debug.Log(LatestLevel);
-        if (LatestLevel == 0 || LatestLevel == 23)
+        if (LatestLevel == 0 || LatestLevel == 28)
         {
             LoadNewScene(2);
         }
