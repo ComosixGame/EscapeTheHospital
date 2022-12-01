@@ -5,25 +5,23 @@ using UnityEngine;
 public class Convenyor : MonoBehaviour
 {
     public LayerMask layer;
-    private CharacterController characterController;
-    [SerializeField] private float speed = 1000f;
+    [SerializeField] private float speed = 0.005f;
     Rigidbody rb;
     Vector3 pos;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        characterController = GetComponent<CharacterController>();
     }
 
     private void Update() 
     {
-        pos = rb.position;              
+        pos = rb.position;             
     }
 
     private void OnTriggerStay(Collider other) {    
         if((layer & (1 << other.gameObject.layer)) != 0) {
-            characterController.Move(pos*speed); 
+            other.gameObject.transform.GetComponent<CharacterController>().Move(pos*speed);
         }
     }
 }
