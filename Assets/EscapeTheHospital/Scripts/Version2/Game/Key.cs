@@ -7,7 +7,6 @@ public class Key : MonoBehaviour
     public  LayerMask layer;
     public  GameObject key;
     public  AudioClip audioClip;
-
     [Range(0,1)] public float volumeScale;
 
     private void Awake() 
