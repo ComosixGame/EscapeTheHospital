@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TeleportController : MonoBehaviour
-{
+{ 
+    
     public Transform destination;
     public LayerMask layer;
 
